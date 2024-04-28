@@ -38,6 +38,7 @@
 .dropdown ul li .icon {
     display: flex;
     width: 25px;
+    height: 25px;
     margin-right: 3px;
 }
 
