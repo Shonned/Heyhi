@@ -29,10 +29,11 @@
 }
 
 .history .history-messages .history-message {
+    position: relative;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     padding: 10px 15px;
-    border-radius: 15px;
+    border-radius: 10px;
     color: var(--light-grey-color);
     font-size: 15px;
     transition: all .3s;
@@ -45,5 +46,18 @@
 }
 
 .history .history-messages .history-message:not(:first-child) {
-    margin-top: 5px;
+    margin-top: 10px;
+}
+
+
+.history .history-messages .history-message .time {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3px;
+    font-size: 11px;
+}
+
+.history .history-messages .history-message .time span {
+    margin-right: 5px;
+    font-size: 15px;
 }

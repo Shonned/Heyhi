@@ -35,9 +35,21 @@ const History = () => {
                 </div>
                 <div className="history-messages">
                     <div className="history-message active">
+                        <div className="time">
+                            <span className="material-symbols-rounded">
+                                schedule
+                            </span>
+                            Wed. 9:32am
+                        </div>
                         {truncatedText}
                     </div>
                     <div className="history-message">
+                        <div className="time">
+                            <span className="material-symbols-rounded">
+                                schedule
+                            </span>
+                            Wed. 9:32am
+                        </div>
                         {truncatedText}
                     </div>
                 </div>
