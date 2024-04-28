@@ -1,0 +1,32 @@
+.input-group {
+    position: relative;
+}
+
+.input-group .input-label span {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    z-index: 1;
+    color: var(--light-grey-color);
+}
+
+.input-group .input-label + .text-input {
+    padding: 10px 13px 10px 40px;
+}
+
+.input-group input[type=text] {
+    position: relative;
+    width: 100%;
+    padding: 10px 13px;
+    font-size: 15px;
+    border-radius: 25px;
+    background: var(--foreground-color);
+    color: var(--light-grey-color);
+    border: 2px solid var(--grey-color);
+    cursor: pointer;
+}
+
+.input-group input[type=text]:focus {
+    outline: none;
+}

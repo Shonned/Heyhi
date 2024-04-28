@@ -1,0 +1,78 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 65px;
+    padding: 10px 0;
+    background: var(--background-color);
+}
+
+.sidebar .sidebar-logo {
+    width: 55px;
+    height: 55px;
+    margin: auto auto 10px;
+    background-image: url("https://i.ibb.co/N2rPbj7/heyhi-form.png");
+    background-size: cover;
+    background-position: center center;
+}
+
+.sidebar .sidebar-items {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    list-style: none;
+}
+
+.sidebar .sidebar-items .sidebar-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    background: transparent;
+    border-radius: 10px;
+    transition: all .3s;
+}
+
+.sidebar .sidebar-items .sidebar-item a {
+    display: flex;
+}
+
+.sidebar .sidebar-items .sidebar-item span {
+    font-size: 27px;
+    color: var(--light-grey-color);
+}
+
+.sidebar .sidebar-items .sidebar-item.active,
+.sidebar .sidebar-items .sidebar-item:hover {
+    background: var(--grey-color);
+}
+
+.sidebar .sidebar-items .sidebar-item.active a span,
+.sidebar .sidebar-items .sidebar-item:hover a span {
+    color: var(--white);
+}
+
+.sidebar .sidebar-items .sidebar-item:active a {
+    transform: scale(.90);
+}
+
+.sidebar .sidebar-items .sidebar-item.sidebar-user {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 45px;
+    width: 45px;
+    background: var(--grey-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.sidebar .sidebar-items .sidebar-item.sidebar-user span {
+    font-size: 30px;
+}

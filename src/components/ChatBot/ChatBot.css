@@ -1,0 +1,31 @@
+.chatbot {
+    position: relative;
+    height: 100vh;
+    width: 75%;
+    padding: 25px;
+}
+
+.chatbot .chatbot-content {
+    position: relative;
+    height: 100%;
+    padding: 20px;
+    background: var(--foreground-color);
+    border-radius: 25px;
+}
+
+.chatbot .chatbot-messages {
+    display: flex;
+    flex-direction: column;
+}
+
+.chatbot .chatbot-form {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+}
+
+.chatbot .chatbot-form input {
+    background: var(--background-color);
+}

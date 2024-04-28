@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #097CFE;
+    --secondary-color: rgba(19, 52, 59, .125);
+    --white: rgba(232, 232, 230, 1);
+    --light-grey-color: rgba(232, 232, 230, .6);
+    --grey-color: rgba(232, 232, 230, .1);
+    --background-color: #202222;
+    --foreground-color: #191a1a;
+    --font-family: "Inter", sans-serif;
+    --font-size-base: 16px;
+    --line-height-base: 1.5;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--secondary-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    color: var(--white);
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    color: var(--secondary-color);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all .3s;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--primary-color);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.app {
+    display: flex;
+    align-items: center;
+}
