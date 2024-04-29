@@ -70,3 +70,7 @@ ul, li {
 .material-symbols-rounded.active-icon {
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
+
+.animate__animated {
+    animation-duration: 500ms;
+}

@@ -1,7 +1,6 @@
 .message {
     display: flex;
     margin-bottom: 15px;
-    animation-duration: 300ms;
 }
 
 .message.message-user {
