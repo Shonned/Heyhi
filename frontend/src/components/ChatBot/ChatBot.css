@@ -23,10 +23,20 @@
     position: sticky;
     bottom: 25px;
     left: 0;
-    width: 100%;
+    display: flex;
+    align-items: center;
     padding: 10px 15px;
     border-radius: 0 0 25px 25px;
     background: var(--foreground-color);
+}
+
+.chatbot .chatbot-form,
+.chatbot .chatbot-form .input-group {
+    width: 100%;
+}
+
+.chatbot .chatbot-form .input-group {
+    margin-right: 15px;
 }
 
 .chatbot .chatbot-form input {

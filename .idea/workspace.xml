@@ -8,8 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatBot/ChatBot.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/ChatBot.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatBot/ChatBot.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/ChatBot.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatBot/Message/Message.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/Message/Message.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatBot/Message/Message.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/Message/Message.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/global.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +68,7 @@
       <workItem from="1714125024742" duration="2514000" />
       <workItem from="1714136479960" duration="7791000" />
       <workItem from="1714246458789" duration="1546000" />
-      <workItem from="1714304360802" duration="10834000" />
+      <workItem from="1714304360802" duration="12027000" />
     </task>
     <servers />
   </component>

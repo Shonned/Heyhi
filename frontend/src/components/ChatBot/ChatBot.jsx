@@ -3,6 +3,7 @@ import Input from "../Form/Input/Input.jsx";
 import {useState} from "react";
 import { MessageBot, MessageUser } from './Message/Message.jsx';
 import SelectAssistant from "./SelectAssistant/SelectAssistant.jsx";
+import Button from "../Form/Button/Button.jsx";
 
 const ChatBot = () => {
 
@@ -10,6 +11,10 @@ const ChatBot = () => {
     const smallText = "Lorem ipsum dolor sit amet";
 
     const startOptions = ['Yes', 'No'];
+
+    const sendMessage = () => {
+        console.log(longText);
+    }
 
     return (
         <div className="chatbot">
@@ -26,6 +31,7 @@ const ChatBot = () => {
                     type="text"
                     placeholder="Aa"
                 />
+                <Button onClick={sendMessage} text="Send" icon="send" />
             </div>
         </div>
     )
