@@ -5,30 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7b37dd7-4172-4938-9925-ade57a53db08" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintrc.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.eslintrc.cjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vite.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/vite.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChatBot/ChatBot.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/ChatBot.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChatBot/ChatBot.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/ChatBot.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChatBot/Message/Message.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/Message/Message.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChatBot/Message/Message.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/Message/Message.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ChatBot/SelectAssistant/SelectAssistant.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/SelectAssistant/SelectAssistant.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/Input/Input.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Form/Input/Input.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/Input/Input.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Form/Input/Input.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/History/History.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/History/History.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/History/History.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/History/History.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/Sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Sidebar/Sidebar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Sidebar/Sidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Utils/Dropdown/Dropdown.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Utils/Dropdown/Dropdown.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Utils/Dropdown/Dropdown.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Utils/Dropdown/Dropdown.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/vite.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatBot/ChatBot.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/ChatBot.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatBot/Message/Message.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/Message/Message.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatBot/Message/Message.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatBot/Message/Message.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +68,7 @@
       <workItem from="1714125024742" duration="2514000" />
       <workItem from="1714136479960" duration="7791000" />
       <workItem from="1714246458789" duration="1546000" />
-      <workItem from="1714304360802" duration="8042000" />
+      <workItem from="1714304360802" duration="9436000" />
     </task>
     <servers />
   </component>

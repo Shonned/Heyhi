@@ -2,6 +2,11 @@
     display: flex;
 }
 
+.message.message-user {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+
 .message .user {
     width: 40px;
     height: 40px;
@@ -10,12 +15,21 @@
 }
 
 .message .content {
-    max-width: 400px;
+    max-width: 300px;
     margin-left: 15px;
-    padding: 15px;
+    padding: 8px 15px;
     font-size: 15px;
     color: var(--white);
     background: var(--background-color);
     border: 1px solid var(--grey-color);
-    border-radius: 3px 10px 10px 10px;
+    border-radius: 3px 15px 15px 15px;
+}
+
+.message.message-user .content {
+    margin: 0 15px 0 0;
+    border-radius: 15px 3px 15px 15px;
+}
+
+.message .content.short-content {
+    border-radius: 25px;
 }
