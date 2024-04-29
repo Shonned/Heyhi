@@ -1,5 +1,10 @@
 .message {
     display: flex;
+    margin-bottom: 30px;
+}
+
+.message:last-child {
+    margin-bottom: 60px;
 }
 
 .message.message-user {
@@ -14,9 +19,9 @@
     background: var(--primary-color);
 }
 
-.message .content {
+.message .content,
+.message .options .option {
     max-width: 300px;
-    margin-left: 15px;
     padding: 8px 15px;
     font-size: 15px;
     color: var(--white);
@@ -25,11 +30,33 @@
     border-radius: 3px 15px 15px 15px;
 }
 
-.message.message-user .content {
+.message .content-flex {
+    margin-left: 15px;
+}
+
+.message.message-user .content-flex {
     margin: 0 15px 0 0;
+}
+
+.message.message-user .content {
     border-radius: 15px 3px 15px 15px;
 }
 
-.message .content.short-content {
+.message .content .options {
+    display: flex;
+    flex-direction: column;
+}
+
+.message .content.short-content,
+.message .options .option {
     border-radius: 25px;
+}
+
+.message .options .option:first-child {
+    margin-top: 10px;
+}
+
+.message .options .option {
+    margin-top: 7px;
+    cursor: pointer;
 }
