@@ -8,7 +8,8 @@ const SelectAssistant = () => {
     const dropdownStyle = {
         position: 'absolute',
         top: '20px',
-        right: '20px'
+        right: '20px',
+        zIndex: 2,
     }
 
     const handleChange = (option) => {

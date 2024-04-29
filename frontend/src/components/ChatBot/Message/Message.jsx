@@ -1,4 +1,5 @@
 import './Message.css'
+import 'animate.css';
 
 const getContentClassName = (content) => {
     return content.length <= 50 ? 'content short-content' : 'content';
@@ -6,7 +7,7 @@ const getContentClassName = (content) => {
 
 const MessageBot = ({ content, options }) => {
     return (
-        <div className="message message-bot">
+        <div className="message message-bot animate__animated animate__fadeInUp">
             <div className="user">Bot</div>
             <div className="content-flex">
                 <div className={getContentClassName(content)}>{content}</div>
@@ -26,7 +27,7 @@ const MessageBot = ({ content, options }) => {
 
 const MessageUser = ({ content, options }) => {
     return (
-        <div className="message message-user">
+        <div className="message message-user animate__animated animate__fadeInUp">
             <div className="user">You</div>
             <div className="content-flex">
                 <div className={getContentClassName(content)}>{content}</div>

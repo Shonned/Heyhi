@@ -1,4 +1,5 @@
 import './History.css'
+import 'animate.css';
 import Input from "../Form/Input/Input.jsx";
 import {useState} from "react";
 import _ from 'lodash';
@@ -34,7 +35,7 @@ const History = () => {
                     </div>
                 </div>
                 <div className="history-messages">
-                    <div className="history-message active">
+                    <div className="history-message active animate__animated animate__fadeInDown">
                         <div className="time">
                             <span className="material-symbols-rounded">
                                 schedule
@@ -43,7 +44,7 @@ const History = () => {
                         </div>
                         {truncatedText}
                     </div>
-                    <div className="history-message">
+                    <div className="history-message animate__animated animate__fadeInDown">
                         <div className="time">
                             <span className="material-symbols-rounded">
                                 schedule

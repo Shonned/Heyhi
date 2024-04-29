@@ -11,12 +11,14 @@
     padding: 20px;
     background: var(--foreground-color);
     border-radius: 25px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .chatbot .chatbot-messages {
     display: flex;
     flex-direction: column;
+    padding-bottom: 90px;
+    overflow-y: auto;
 }
 
 .chatbot .chatbot-form {
