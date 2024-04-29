@@ -30,8 +30,9 @@ const MessageBot = ({ content, options, onOptionClick }) => {
                                  onClick={() => !isOptionSelected && handleOptionClick(option)}
                             >
                                 <span>
-                                    <span className="emoji">{selectedOption === option ? '🎉' : ''}</span>
-                                    {option}</span>
+                                    <span className="icon material-symbols-rounded">{selectedOption === option ? 'done' : ''}</span>
+                                    {option}
+                                </span>
                             </div>
                         ))}
                     </div>

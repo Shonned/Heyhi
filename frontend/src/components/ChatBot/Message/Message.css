@@ -61,6 +61,11 @@
     background: var(--primary-color);
 }
 
-.message .options .option.selected .emoji {
+.message .options .option.selected .icon {
     margin-right: 7px;
+}
+
+.message .options .option span {
+    display: flex;
+    align-content: center;
 }
