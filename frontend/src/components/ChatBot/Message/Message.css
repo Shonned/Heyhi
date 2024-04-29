@@ -1,6 +1,7 @@
 .message {
     display: flex;
     margin-bottom: 15px;
+    animation-duration: 300ms;
 }
 
 .message.message-user {
@@ -55,4 +56,12 @@
 .message .options .option {
     margin-top: 7px;
     cursor: pointer;
+}
+
+.message .options .option.selected {
+    background: var(--primary-color);
+}
+
+.message .options .option.selected .emoji {
+    margin-right: 7px;
 }

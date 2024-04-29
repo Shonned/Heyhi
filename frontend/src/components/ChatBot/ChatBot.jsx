@@ -8,28 +8,33 @@ import Button from "../Form/Button/Button.jsx";
 const ChatBot = () => {
 
     // Placeholder
-    const longText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-    const smallText = "Lorem ipsum dolor sit amet";
-    const startOptions = ['Yes', 'No'];
+    const welcome = "Welcome on Heyhi, choose your case below :";
+    const startOptions = ['Loan application', 'Others'];
 
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
 
     const [messages, setMessages] = useState([
-        { content: "Hi", isBot: true },
-        { content: longText, isBot: true, options: startOptions },
-        { content: smallText, isBot: false },
+        { content: welcome, isBot: true, options: startOptions },
     ]);
 
     const sendMessage = () => {
         if (request) {
-            setMessages([...messages, { content: request, isBot: false }]);
+            addMessage(request);
             setRequest('');
-            chatbotContentRef.current.scrollTo({
-                top: chatbotContentRef.current.scrollHeight,
-                behavior: 'smooth'
-            });
         }
+    };
+
+    const handleOptionClick = (option) => {
+        addMessage(option);
+    };
+
+    const addMessage = (content) => {
+        setMessages([...messages, { content, isBot: false }]);
+        chatbotContentRef.current.scrollTo({
+            top: chatbotContentRef.current.scrollHeight,
+            behavior: 'smooth'
+        });
     };
 
     const handleRequest = (e) => {
@@ -43,7 +48,7 @@ const ChatBot = () => {
                 <div className="chatbot-messages">
                     {messages.map((message, index) =>
                         message.isBot ? (
-                            <MessageBot key={index} content={message.content} options={message.options}/>
+                            <MessageBot key={index} content={message.content} options={message.options} onOptionClick={handleOptionClick} />
                         ) : (
                             <MessageUser key={index} content={message.content}/>
                         )
