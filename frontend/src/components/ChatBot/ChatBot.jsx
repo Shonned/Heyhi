@@ -26,7 +26,7 @@ const ChatBot = () => {
             const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
 
             setTimeout(() => {
-                const botResponse = getBotResponseByName('error').content;
+                const botResponse = getBotResponseByName('error');
                 addMessage(botResponse.content, botResponse.isBot, botResponse.options);
                 setPendingResponse(false);
             }, delay);

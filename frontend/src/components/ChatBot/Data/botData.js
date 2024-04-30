@@ -13,6 +13,7 @@ const botResponses = [
         name: 'error',
         content: "An error has occurred.",
         isBot: true,
+        options: [],
     }
 ];
 
