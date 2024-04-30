@@ -5,32 +5,52 @@ import { MessageBot, MessageUser } from './Message/Message.jsx';
 import SelectAssistant from "./SelectAssistant/SelectAssistant.jsx";
 import Button from "../Form/Button/Button.jsx";
 
+import { getBotResponseByName } from './Data/botData.js';
+import { getBotResponseByOption } from './Data/botHelper.js';
+
 const ChatBot = () => {
-
-    // Placeholder
-    const welcome = "Welcome on Heyhi, choose your case below :";
-    const startOptions = ['Loan application', 'Others'];
-
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
+    const [pendingResponse, setPendingResponse] = useState(false);
 
     const [messages, setMessages] = useState([
-        { content: welcome, isBot: true, options: startOptions },
+        { content: getBotResponseByName('welcome').content, isBot: true, options: getBotResponseByName('welcome').options },
     ]);
 
     const sendMessage = () => {
         if (request) {
             addMessage(request);
             setRequest('');
+            setPendingResponse(true);
+
+            const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
+
+            setTimeout(() => {
+                const botResponse = getBotResponseByName('error').content;
+                addMessage(botResponse.content, botResponse.isBot, botResponse.options);
+                setPendingResponse(false);
+            }, delay);
         }
     };
 
     const handleOptionClick = (option) => {
         addMessage(option);
+        setPendingResponse(true);
+        const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
+
+        setTimeout(() => {
+            const botResponse = getBotResponseByOption(option);
+            addMessage(botResponse.content, botResponse.isBot, botResponse.options);
+            setPendingResponse(false);
+        }, delay);
     };
 
-    const addMessage = (content) => {
-        setMessages([...messages, { content, isBot: false }]);
+
+    const addMessage = (content, isBot = false, options = []) => {
+        setMessages((prevMessages) => [
+            ...prevMessages,
+            { content, isBot, options },
+        ]);
         chatbotContentRef.current.scrollTo({
             top: chatbotContentRef.current.scrollHeight,
             behavior: 'smooth'
@@ -40,6 +60,8 @@ const ChatBot = () => {
     const handleRequest = (e) => {
         setRequest(e.target.value);
     }
+
+    const lastMessageHasOptions = messages.length > 0 && messages[messages.length - 1].options.length > 0
 
     return (
         <div className="chatbot">
@@ -61,8 +83,9 @@ const ChatBot = () => {
                     placeholder="Aa"
                     onChange={handleRequest}
                     value={request}
+                    disabled={pendingResponse || lastMessageHasOptions}
                 />
-                <Button onClick={sendMessage} text="Send" icon="send" />
+                <Button onClick={sendMessage} text="Send" icon="send" loading={pendingResponse}/>
             </div>
         </div>
     )
