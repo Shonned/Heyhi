@@ -1,6 +1,6 @@
 import './Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ({onOpenModal}) => {
     return (
         <aside className="sidebar">
             <div className="sidebar-logo"></div>
@@ -12,7 +12,7 @@ const Sidebar = () => {
                         </span>
                     </a>
                 </li>
-                <li className="sidebar-item">
+                <li className="sidebar-item" onClick={() => onOpenModal('modal1')}>
                     <a href="#" className="sidebar-link">
                         <span className="material-symbols-rounded">
                             settings

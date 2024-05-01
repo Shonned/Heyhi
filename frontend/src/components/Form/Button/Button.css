@@ -15,6 +15,11 @@ button.button {
     color: white;
     background: var(--primary-color);
     border-radius: 25px;
+    transition: all .3s;
+}
+
+button.button:active {
+    transform: scale(.98);
 }
 
 button.button span:not(.loader) {
