@@ -1,13 +1,12 @@
-export const startOptions = ['Loan application', 'Others'];
-export const loanApplicationOptions = ['Personal loan', 'Business loan', 'Mortgage'];
-export const othersOptions = ['Account balance', 'Transaction history', 'Customer support'];
+export const refusedOptions = ['Yes', 'No'];
+export const agreedOptions = ['I\'m satisfied with the explanation', 'I\'ll need a solution or an alternative'];
 
 const botResponses = [
     {
-        name: 'welcome',
-        content: "Hello, how can I assist you today?",
+        name: 'refused',
+        content: "I'm sorry to inform you that your loan application has been rejected. Would you like an explanation?",
         isBot: true,
-        options: startOptions,
+        options: refusedOptions,
     },
     {
         name: 'error',

@@ -27,7 +27,7 @@ const Modal = ({onClose, modalId}) => {
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab architecto delectus distinctio enim, fuga impedit, iste obcaecati quis recusandae reiciendis ullam unde, vel voluptas? Architecto ea odio voluptas? Laudantium, vel?
                 </div>
                 <div className="modal-submit">
-                    <Button type="submit" text="Valider" loading={loading} onClick={action} />
+                    <Button type="submit" text="Submit" loading={loading} onClick={action} />
                 </div>
             </div>
         </div>

@@ -27,7 +27,7 @@ const History = () => {
                     <div className="search-bar">
                         <Input
                             type="text"
-                            placeholder="Rechercher..."
+                            placeholder="Search..."
                             value={searchTerm}
                             onChange={handleSearchChange}
                             icon={'search'}

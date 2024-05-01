@@ -14,7 +14,7 @@ const ChatBot = () => {
     const [pendingResponse, setPendingResponse] = useState(false);
 
     const [messages, setMessages] = useState([
-        { content: getBotResponseByName('welcome').content, isBot: true, options: getBotResponseByName('welcome').options },
+        { content: getBotResponseByName('refused').content, isBot: true, options: getBotResponseByName('refused').options },
     ]);
 
     const sendMessage = () => {
