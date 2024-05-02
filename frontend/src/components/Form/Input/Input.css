@@ -2,7 +2,7 @@
     position: relative;
 }
 
-.input-group .input-label span {
+.input-group .input-label-icon span {
     position: absolute;
     top: 50%;
     left: 10px;
@@ -11,13 +11,11 @@
     color: var(--light-grey-color);
 }
 
-.input-group .input-label + .text-input {
+.input-group .input-label-icon + .text-input {
     padding: 10px 13px 10px 40px;
 }
 
-.input-group input[type=text],
-.input-group input[type=email],
-.input-group input[type=password] {
+.input-group input {
     position: relative;
     width: 100%;
     padding: 10px 13px;
@@ -29,9 +27,43 @@
     cursor: pointer;
 }
 
-.input-group input[type=text]:focus,
-.input-group input[type=email]:focus,
-.input-group input[type=password]:focus
-{
-    outline: none;
+.input-group input:focus {
+    outline: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+form .input-group input {
+    padding: 12px 13px;
+    border-radius: 6px;
+}
+
+.input-group .input-label {
+    position: absolute;
+    top: 13px;
+    left: 17px;
+    width: 75%;
+    background: var(--foreground-color);
+    color: var(--light-grey-color);
+    font-size: 12px;
+    font-weight: 500;
+    transition: all .3s;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.input-group input:focus+.input-label,
+.input-group input:not(:placeholder-shown)+.input-label,
+.input-group textarea:focus+.input-label,
+.input-group textarea:not(:placeholder-shown)+.input-label {
+    top: -10px;
+    left: 10px;
+    padding: 2px 8px;
+    width: auto;
+    color: var(--primary-color);
+    border-radius: 15px;
+}
+
+.input-group input:not(:focus)+.input-label,
+.input-group textarea:not(:focus)+.input-label {
+    color: var(--light-grey-color);
 }

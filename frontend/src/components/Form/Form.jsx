@@ -3,8 +3,8 @@ import Input from "./Input/Input.jsx";
 const LoginForm = () => {
     return (
         <>
-            <Input type="text" placeholder="Nom d'utilisateur" name="username"/>
-            <Input type="password" placeholder="Mot de passe" name="password"/>
+            <Input type="email" label="Adresse e-mail" name="email" id="email"/>
+            <Input type="password" label="Mot de passe" name="password" id="password"/>
         </>
     );
 };
@@ -12,9 +12,9 @@ const LoginForm = () => {
 const RegisterForm = () => {
     return (
         <>
-            <Input type="text" placeholder="Nom d'utilisateur" name="username"/>
-            <Input type="email" placeholder="Adresse e-mail" name="email"/>
-            <Input type="password" placeholder="Mot de passe" name="password"/>
+            <Input type="text" label="Nom d'utilisateur" name="username" id="username" />
+            <Input type="email" label="Adresse e-mail" name="email" id="email"/>
+            <Input type="password" label="Mot de passe" name="password" id="password"/>
         </>
     );
 };
@@ -22,9 +22,9 @@ const RegisterForm = () => {
 const SettingsForm = () => {
     return (
         <>
-            <Input type="text" placeholder="Nouveau nom d'utilisateur" name="newUsername"/>
-            <Input type="email" placeholder="Nouvelle adresse e-mail" name="newEmail"/>
-            <Input type="password" placeholder="Nouveau mot de passe" name="newPassword"/>
+            <Input type="text" label="Nouveau nom d'utilisateur" name="newUsername" id="newUsername"/>
+            <Input type="email" label="Nouvelle adresse e-mail" name="newEmail" id="newEmail" />
+            <Input type="password" label="Nouveau mot de passe" name="newPassword" id="newPassword"/>
         </>
     );
 };
