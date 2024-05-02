@@ -1,7 +1,7 @@
 import './Input.css'
 
 // eslint-disable-next-line react/prop-types
-const Input = ({ type, placeholder, value, onChange, icon, disabled }) => {
+const Input = ({ type, placeholder, name, value, onChange, icon, disabled }) => {
     return (
         <div className='input-group'>
             {icon && (
@@ -14,6 +14,7 @@ const Input = ({ type, placeholder, value, onChange, icon, disabled }) => {
             <input
                 type={type}
                 placeholder={placeholder}
+                name={name}
                 value={value}
                 onChange={onChange}
                 className="text-input"

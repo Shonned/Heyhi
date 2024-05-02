@@ -5,7 +5,6 @@ import Modal from "./components/Utils/Modal/Modal.jsx";
 import {useState} from "react";
 
 function App() {
-
     const [modals, setModals] = useState({});
 
     const handleOpenModal = (modalId) => {
@@ -16,14 +15,18 @@ function App() {
         setModals((prevModals) => ({ ...prevModals, [modalId]: false }));
     };
 
-    return <>
-      <div className="app">
-          <Sidebar onOpenModal={handleOpenModal} />
-          <History />
-          <ChatBot />
-          {modals.modal1 && <Modal modalId="modal1" onClose={handleCloseModal} />}
-      </div>
-    </>
+    return (
+        <>
+            <div className="app">
+                <Sidebar onOpenModal={handleOpenModal} />
+                <History />
+                <ChatBot />
+                {modals.login && <Modal modalId="login" onClose={handleCloseModal} />}
+                {modals.register && <Modal modalId="register" onClose={handleCloseModal} />}
+                {modals.settings && <Modal modalId="settings" onClose={handleCloseModal} />}
+            </div>
+        </>
+    );
 }
 
-export default App
+export default App;
