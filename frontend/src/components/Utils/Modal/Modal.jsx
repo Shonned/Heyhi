@@ -18,7 +18,7 @@ const Modal = ({onClose, modalId}) => {
             <div className="modal-container animate__animated animate__fadeInUp">
                 <div className="modal-header">
                     <h3 className="modal-title">
-                        {modalId === 'login' ? 'Connexion' : modalId === 'register' ? 'Inscription' : 'Paramètres'}
+                        {modalId === 'login' ? 'Login' : modalId === 'register' ? 'Register' : 'Settings'}
                     </h3>
                     <div className="modal-close" onClick={() => onClose(modalId)}>
                         <span className="icon material-symbols-rounded">

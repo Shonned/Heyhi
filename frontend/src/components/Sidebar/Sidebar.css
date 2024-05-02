@@ -70,9 +70,15 @@
     width: 45px;
     background: var(--grey-color);
     border-radius: 50%;
+
     cursor: pointer;
 }
 
 .sidebar .sidebar-items .sidebar-item.sidebar-user span {
     font-size: 30px;
+    transition: all .3s;
+}
+
+.sidebar .sidebar-items .sidebar-item.sidebar-user:active span {
+    transform: scale(.9);
 }
