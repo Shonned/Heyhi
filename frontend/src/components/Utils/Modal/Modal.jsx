@@ -32,7 +32,7 @@ const Modal = ({onClose, modalId}) => {
                         {modalId === 'register' && <RegisterForm/>}
                         {modalId === 'settings' && <SettingsForm/>}
                         <div className="modal-submit">
-                            <Button type="submit" text={modalId === 'login' ? 'Se connecter' : modalId === 'register' ? "S'inscrire" : 'Mettre à jour'} loading={loading} onClick={handleSubmit}/>
+                            <Button type="submit" text={modalId === 'login' ? 'Login' : modalId === 'register' ? "Register" : 'Update'} loading={loading} onClick={handleSubmit}/>
                         </div>
                     </form>
                 </div>
