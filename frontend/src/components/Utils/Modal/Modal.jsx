@@ -1,8 +1,15 @@
-import './Modal.css'
-import '../../Form/Form.css'
 import {useState} from "react";
-import {LoginForm, RegisterForm, SettingsForm} from "../../Form/Form.jsx";
-import Button from "../../Form/Button/Button.jsx";
+import {LoginForm, RegisterForm, SettingsForm} from "@components/Form/Form.jsx";
+import Button from "@components/Form/Button/Button.jsx";
+import {
+    StyledModal,
+    AnimatedModalContainer,
+    ModalHeader,
+    ModalClose,
+    ModalBody,
+    ModalSubmit,
+} from './Modal.styles';
+
 
 const Modal = ({onClose, modalId}) => {
 
@@ -14,30 +21,34 @@ const Modal = ({onClose, modalId}) => {
     };
 
     return (
-        <div className="modal">
-            <div className="modal-container animate__animated animate__fadeInUp">
-                <div className="modal-header">
-                    <h2 className="modal-title">
+        <StyledModal>
+            <AnimatedModalContainer>
+                <ModalHeader>
+                    <h2>
                         {modalId === 'login' ? 'Login' : modalId === 'register' ? 'Register' : 'Settings'}
                     </h2>
-                    <div className="modal-close" onClick={() => onClose(modalId)}>
+                    <ModalClose onClick={() => onClose(modalId)}>
                         <span className="icon material-symbols-rounded">
                             close
                         </span>
-                    </div>
-                </div>
-                <div className="modal-body">
+                    </ModalClose>
+                </ModalHeader>
+                <ModalBody>
                     <form onSubmit={handleSubmit}>
                         {modalId === 'login' && <LoginForm/>}
                         {modalId === 'register' && <RegisterForm/>}
                         {modalId === 'settings' && <SettingsForm/>}
-                        <div className="modal-submit">
-                            <Button type="submit" text={modalId === 'login' ? 'Login' : modalId === 'register' ? "Register" : 'Update'} loading={loading} onClick={handleSubmit}/>
-                        </div>
+                        <ModalSubmit>
+                            <Button type="submit"
+                                    text={modalId === 'login' ? 'Login' : modalId === 'register' ? "Register" : 'Update'}
+                                    loading={loading}
+                                    onClick={handleSubmit}
+                                    style={{ width: '100%' }} />
+                        </ModalSubmit>
                     </form>
-                </div>
-            </div>
-        </div>
+                </ModalBody>
+            </AnimatedModalContainer>
+        </StyledModal>
     );
 };
 

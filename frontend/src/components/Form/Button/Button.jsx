@@ -1,8 +1,8 @@
 import './Button.css'
 
-const Button = ({ onClick = '', text, type = 'button', className = 'button', icon = '', loading }) => {
+const Button = ({ onClick = '', text, type = 'button', className = 'button', icon = '', loading, style }) => {
     return (
-        <button className={className} type={type} onClick={onClick}>
+        <button className={className} type={type} onClick={onClick} style={style}>
             {!loading && (
                 <>
                     <span>{text}</span>
