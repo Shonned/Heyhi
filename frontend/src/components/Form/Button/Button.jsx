@@ -1,22 +1,22 @@
-import './Button.css'
+import { StyledButton, Loader } from './Button.styles';
 
 const Button = ({ onClick = '', text, type = 'button', className = 'button', icon = '', loading, style }) => {
     return (
-        <button className={className} type={type} onClick={onClick} style={style}>
+        <StyledButton className={className} type={type} onClick={onClick} style={style}>
             {!loading && (
                 <>
                     <span>{text}</span>
                     {icon && (
                         <span className="material-symbols-rounded">
-                            {icon}
-                        </span>
+              {icon}
+            </span>
                     )}
                 </>
             )}
             {loading && (
-                <span className="loader"></span>
+                <Loader className="loader" />
             )}
-        </button>
+        </StyledButton>
     );
 };
 

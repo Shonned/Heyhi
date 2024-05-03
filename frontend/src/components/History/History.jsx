@@ -1,7 +1,14 @@
-import './History.css'
-import 'animate.css';
-import Input from "../Form/Input/Input.jsx";
-import {useState} from "react";
+import {
+    HistoryContainer,
+    HistoryContent,
+    HistoryHeader,
+    SearchBar,
+    HistoryMessages,
+    HistoryMessage,
+    Time,
+} from './History.styles.js';
+import Input from "@components/Form/Input/Input.jsx";
+import { useState } from "react";
 import _ from 'lodash';
 
 const History = () => {
@@ -20,11 +27,11 @@ const History = () => {
     });
 
     return (
-        <div className="history">
-            <div className="history-content">
-                <div className="history-header">
+        <HistoryContainer>
+            <HistoryContent>
+                <HistoryHeader>
                     <h2 className="title">History</h2>
-                    <div className="search-bar">
+                    <SearchBar>
                         <Input
                             type="text"
                             placeholder="Search..."
@@ -32,31 +39,29 @@ const History = () => {
                             onChange={handleSearchChange}
                             icon={'search'}
                         />
-                    </div>
-                </div>
-                <div className="history-messages">
-                    <div className="history-message active animate__animated animate__fadeInDown">
-                        <div className="time">
-                            <span className="material-symbols-rounded">
-                                schedule
-                            </span>
-                            Wed. 9:32am
-                        </div>
+                    </SearchBar>
+                </HistoryHeader>
+                <HistoryMessages>
+                    <HistoryMessage className="active animate__animated animate__fadeInDown">
+                        <Time>
+                          <span className="material-symbols-rounded">
+                            schedule
+                          </span> Wed. 9:32am
+                        </Time>
                         {truncatedText}
-                    </div>
-                    <div className="history-message animate__animated animate__fadeInDown">
-                        <div className="time">
-                            <span className="material-symbols-rounded">
-                                schedule
-                            </span>
-                            Wed. 9:32am
-                        </div>
+                    </HistoryMessage>
+                    <HistoryMessage className="animate__animated animate__fadeInDown">
+                        <Time>
+                          <span className="material-symbols-rounded">
+                            schedule
+                          </span> Wed. 9:32am
+                        </Time>
                         {truncatedText}
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
+                    </HistoryMessage>
+                </HistoryMessages>
+            </HistoryContent>
+        </HistoryContainer>
+    );
+};
 
 export default History;
