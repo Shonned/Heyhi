@@ -44,3 +44,28 @@
 .chatbot .chatbot-form input {
     background: var(--background-color);
 }
+
+@media screen and (max-width: 800px) {
+    .chatbot {
+        margin-left: 50px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .chatbot {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0;
+        max-height: 100%;
+        padding: 25px 25px 65px 25px;
+    }
+
+    .chatbot .chatbot-content {
+        border-radius: 25px 25px 0 0;
+    }
+
+    .chatbot-form {
+        position: relative;
+    }
+}

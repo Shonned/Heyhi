@@ -70,7 +70,6 @@
     width: 45px;
     background: var(--grey-color);
     border-radius: 50%;
-
     cursor: pointer;
 }
 
@@ -81,4 +80,41 @@
 
 .sidebar .sidebar-items .sidebar-item.sidebar-user:active span {
     transform: scale(.9);
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar {
+        top: auto;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        height: 60px;
+        width: 100%;
+        padding: 0;
+        z-index: 3;
+    }
+
+    .sidebar .sidebar-logo {
+       display: none;
+    }
+
+    .sidebar .sidebar-items {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .sidebar .sidebar-items .sidebar-item {
+        margin-top: 0;
+        width: 45px;
+        height: 45px;
+    }
+
+    .sidebar .sidebar-items .sidebar-item.sidebar-user {
+        position: relative;
+        bottom: inherit;
+        left: inherit;
+        transform: translate(0);
+        background: transparent;
+    }
 }
