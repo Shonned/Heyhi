@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const InputGroup = styled.div`
     position: relative;
+    width: 100%;
 `;
 
 export const InputLabel = styled.label`

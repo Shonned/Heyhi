@@ -1,6 +1,5 @@
-import './Message.css'
-import 'animate.css';
 import {useState} from "react";
+import {Message, User, Content, ContentFlex, Options, Option} from "./Message.styles.js";
 
 const getContentClassName = (content) => {
     return content.length <= 50 ? 'content short-content' : 'content';
@@ -18,38 +17,39 @@ const MessageBot = ({ content, options, onOptionClick }) => {
     }
 
     return (
-        <div className="message message-bot animate__animated animate__fadeInUp">
-            <div className="user">Bot</div>
-            <div className="content-flex">
-                <div className={getContentClassName(content)}>{content}</div>
+        <Message className="message message-bot animate__animated animate__fadeInUp">
+            <User>Bot</User>
+            <ContentFlex>
+                <Content className={getContentClassName(content)}>{content}</Content>
                 {options && (
-                    <div className="options">
+                    <Options>
                         {options.map((option, index) => (
-                            <div key={index}
-                                 className={`option ${selectedOption === option ? 'selected' : ''}`}
-                                 onClick={() => !isOptionSelected && handleOptionClick(option)}
+                            <Option
+                                key={index}
+                                className={`option ${selectedOption === option ? 'selected' : ''}`}
+                                onClick={() => !isOptionSelected && handleOptionClick(option)}
                             >
-                                <span>
-                                    <span className="icon material-symbols-rounded">{selectedOption === option ? 'done' : ''}</span>
-                                    {option}
-                                </span>
-                            </div>
+                              <span>
+                                <span className="icon material-symbols-rounded">{selectedOption === option ? 'done' : ''}</span>
+                                  {option}
+                              </span>
+                            </Option>
                         ))}
-                    </div>
+                    </Options>
                 )}
-            </div>
-        </div>
+            </ContentFlex>
+        </Message>
     );
 };
 
 const MessageUser = ({ content, options }) => {
     return (
-        <div className="message message-user animate__animated animate__fadeInUp">
-            <div className="user">You</div>
-            <div className="content-flex">
-                <div className={getContentClassName(content)}>{content}</div>
-            </div>
-        </div>
+        <Message className="message message-user animate__animated animate__fadeInUp">
+            <User>You</User>
+            <ContentFlex>
+                <Content className={getContentClassName(content)}>{content}</Content>
+            </ContentFlex>
+        </Message>
     );
 };
 

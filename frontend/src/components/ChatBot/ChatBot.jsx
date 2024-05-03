@@ -1,9 +1,13 @@
-import './ChatBot.css'
-import Input from "../Form/Input/Input.jsx";
+import {
+    ChatbotContainer,
+    ChatbotContent,
+    ChatbotMessages,
+    ChatbotForm,
+    StyledChatbotButton
+} from './ChatBot.styles.js';
 import {useRef, useState} from "react";
 import { MessageBot, MessageUser } from './Message/Message.jsx';
-import Button from "../Form/Button/Button.jsx";
-
+import Input from "@components/Form/Input/Input.jsx";
 import { getBotResponseByName } from './Data/botData.js';
 import { getBotResponseByOption } from './Data/botHelper.js';
 
@@ -13,7 +17,11 @@ const ChatBot = () => {
     const [pendingResponse, setPendingResponse] = useState(false);
 
     const [messages, setMessages] = useState([
-        { content: getBotResponseByName('select_assistant').content, isBot: true, options: getBotResponseByName('select_assistant').options },
+        {
+            content: getBotResponseByName('select_assistant').content,
+            isBot: true,
+            options: getBotResponseByName('select_assistant').options
+        },
     ]);
 
     const sendMessage = () => {
@@ -48,7 +56,7 @@ const ChatBot = () => {
     const addMessage = (content, isBot = false, options = []) => {
         setMessages((prevMessages) => [
             ...prevMessages,
-            { content, isBot, options },
+            {content, isBot, options},
         ]);
         chatbotContentRef.current.scrollTo({
             top: chatbotContentRef.current.scrollHeight,
@@ -63,19 +71,24 @@ const ChatBot = () => {
     const lastMessageHasOptions = messages.length > 0 && messages[messages.length - 1].options.length > 0
 
     return (
-        <div className="chatbot">
-            <div className="chatbot-content" ref={chatbotContentRef}>
-                <div className="chatbot-messages">
+        <ChatbotContainer className="chatbot">
+            <ChatbotContent className="chatbot-content" ref={chatbotContentRef}>
+                <ChatbotMessages className="chatbot-messages">
                     {messages.map((message, index) =>
                         message.isBot ? (
-                            <MessageBot key={index} content={message.content} options={message.options} onOptionClick={handleOptionClick} />
+                            <MessageBot
+                                key={index}
+                                content={message.content}
+                                options={message.options}
+                                onOptionClick={handleOptionClick}
+                            />
                         ) : (
                             <MessageUser key={index} content={message.content}/>
                         )
                     )}
-                </div>
-            </div>
-            <div className="chatbot-form">
+                </ChatbotMessages>
+            </ChatbotContent>
+            <ChatbotForm className="chatbot-form">
                 <Input
                     type="text"
                     placeholder="Aa"
@@ -83,10 +96,10 @@ const ChatBot = () => {
                     value={request}
                     disabled={pendingResponse || lastMessageHasOptions}
                 />
-                <Button onClick={sendMessage} text="Send" icon="send" loading={pendingResponse}/>
-            </div>
-        </div>
-    )
+                <StyledChatbotButton className="button" onClick={sendMessage} text="Send" icon="send" loading={pendingResponse}/>
+            </ChatbotForm>
+        </ChatbotContainer>
+    );
 }
 
 export default ChatBot;
