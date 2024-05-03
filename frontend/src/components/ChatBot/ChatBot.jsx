@@ -2,7 +2,6 @@ import './ChatBot.css'
 import Input from "../Form/Input/Input.jsx";
 import {useRef, useState} from "react";
 import { MessageBot, MessageUser } from './Message/Message.jsx';
-import SelectAssistant from "./SelectAssistant/SelectAssistant.jsx";
 import Button from "../Form/Button/Button.jsx";
 
 import { getBotResponseByName } from './Data/botData.js';
@@ -14,7 +13,7 @@ const ChatBot = () => {
     const [pendingResponse, setPendingResponse] = useState(false);
 
     const [messages, setMessages] = useState([
-        { content: getBotResponseByName('refused').content, isBot: true, options: getBotResponseByName('refused').options },
+        { content: getBotResponseByName('select_assistant').content, isBot: true, options: getBotResponseByName('select_assistant').options },
     ]);
 
     const sendMessage = () => {
@@ -66,7 +65,6 @@ const ChatBot = () => {
     return (
         <div className="chatbot">
             <div className="chatbot-content" ref={chatbotContentRef}>
-                <SelectAssistant/>
                 <div className="chatbot-messages">
                     {messages.map((message, index) =>
                         message.isBot ? (

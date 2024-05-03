@@ -1,7 +1,14 @@
+export const selectAssistant = ['Loan Assistant', 'Health Assistant'];
 export const refusedOptions = ['Yes', 'No'];
 export const agreedOptions = ['I\'m satisfied with the explanation', 'I\'ll need a solution or an alternative'];
 
 const botResponses = [
+    {
+        name: 'select_assistant',
+        content: 'Welcome to Heyhi, to get started choose a virtual assistant.',
+        isBot: true,
+        options: selectAssistant,
+    },
     {
         name: 'refused',
         content: "I'm sorry to inform you that your loan application has been rejected. Would you like an explanation?",

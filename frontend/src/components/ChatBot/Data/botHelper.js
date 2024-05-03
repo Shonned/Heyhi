@@ -2,6 +2,20 @@ import { agreedOptions } from './botData';
 
 export const getBotResponseByOption = (option) => {
     switch (option) {
+        case 'Loan Assistant':
+            return {
+                name: 'assistant_loan_welcome',
+                content: "You have selected the loan assistant, but according to your information you are not eligible for a loan.",
+                isBot: true,
+                options: agreedOptions,
+            };
+        case 'Health Assistant':
+            return {
+                name: 'assistant_health_welcome',
+                content: "You have selected the health assistant, but according to your information you are not eligible for a loan.",
+                isBot: true,
+                options: agreedOptions,
+            };
         case 'Yes':
             return {
                 name: 'loan_application_explanation',
