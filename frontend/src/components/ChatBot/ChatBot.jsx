@@ -6,10 +6,10 @@ import {
     StyledChatbotButton
 } from './ChatBot.styles.js';
 import {useRef, useState} from "react";
+import axios from 'axios';
 import { MessageBot, MessageUser } from './Message/Message.jsx';
 import Input from "@components/Form/Input/Input.jsx";
 import { getBotResponseByName } from './Data/botData.js';
-import { getBotResponseByOption } from './Data/botHelper.js';
 
 const ChatBot = () => {
     const [request, setRequest] = useState('');
@@ -24,43 +24,50 @@ const ChatBot = () => {
         },
     ]);
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
         if (request) {
-            addMessage(request);
-            setRequest('');
-            setPendingResponse(true);
+          addMessage(request);
+          setRequest('');
+          setPendingResponse(true);
 
-            const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
+          try {
+            const response = await axios.post('http://localhost:5000/api/chatbot', { request });
+            const botResponse = response.data;
+            console.log(botResponse)
+            addMessage(botResponse.content, true, botResponse.options);
+          } catch (error) {
+            console.error(error);
+            addMessage('An error occurred while processing your request.', true);
+          }
 
-            setTimeout(() => {
-                const botResponse = getBotResponseByName('error');
-                addMessage(botResponse.content, botResponse.isBot, botResponse.options);
-                setPendingResponse(false);
-            }, delay);
+          setPendingResponse(false);
         }
     };
 
-    const handleOptionClick = (option) => {
+    const handleOptionClick = async (option) => {
         addMessage(option);
         setPendingResponse(true);
-        const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
 
-        setTimeout(() => {
-            const botResponse = getBotResponseByOption(option);
-            addMessage(botResponse.content, botResponse.isBot, botResponse.options);
-            setPendingResponse(false);
-        }, delay);
+        try {
+          const response = await axios.post('http://localhost:5000/api/chatbot', { option });
+          const botResponse = response.data;
+          addMessage(botResponse.content, true, botResponse.options);
+        } catch (error) {
+          console.error(error);
+          addMessage('An error occurred while processing your request.', true);
+        }
+
+        setPendingResponse(false);
     };
-
 
     const addMessage = (content, isBot = false, options = []) => {
         setMessages((prevMessages) => [
-            ...prevMessages,
-            {content, isBot, options},
+          ...prevMessages,
+          { content, isBot, options },
         ]);
         chatbotContentRef.current.scrollTo({
-            top: chatbotContentRef.current.scrollHeight,
-            behavior: 'smooth'
+          top: chatbotContentRef.current.scrollHeight,
+          behavior: 'smooth'
         });
     };
 
