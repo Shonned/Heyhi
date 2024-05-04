@@ -3,14 +3,6 @@ import {ModalBody, ModalClose, ModalHeader, ModalSubmit} from "./Modal.styles.js
 import {RegisterForm} from "@components/Form/Form.jsx";
 
 const RegisterModal = ({onClose, modalId}) => {
-
-    const [loading, setLoading] = useState(false);
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setLoading(true);
-    };
-
     return (
         <>
             <ModalHeader>
@@ -24,7 +16,7 @@ const RegisterModal = ({onClose, modalId}) => {
                 </ModalClose>
             </ModalHeader>
             <ModalBody>
-                <RegisterForm loading={loading} handleSubmit={handleSubmit}/>
+                <RegisterForm />
             </ModalBody>
         </>
     );

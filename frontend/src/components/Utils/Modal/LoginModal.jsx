@@ -1,15 +1,7 @@
-import {useState} from "react";
-import {ModalBody, ModalClose, ModalHeader, ModalSubmit} from "./Modal.styles.js";
+import {ModalBody, ModalClose, ModalHeader} from "./Modal.styles.js";
 import {LoginForm} from "@components/Form/Form.jsx";
 
 const LoginModal = ({onClose, modalId}) => {
-
-    const [loading, setLoading] = useState(false);
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setLoading(true);
-    };
 
     return (
         <>
@@ -24,7 +16,7 @@ const LoginModal = ({onClose, modalId}) => {
                 </ModalClose>
             </ModalHeader>
             <ModalBody>
-                <LoginForm loading={loading} handleSubmit={handleSubmit}/>
+                <LoginForm />
             </ModalBody>
         </>
     );
