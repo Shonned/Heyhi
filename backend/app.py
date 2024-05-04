@@ -1,13 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import firebase_admin
-from firebase_admin import credentials, db
+from firebase_admin import credentials, db, firestore
 
 app = Flask(__name__)
 CORS(app)
 
 cred = credentials.Certificate("heyhi-ai-firebase-adminsdk-eztb2-eae73c83e4.json")
 firebase_admin.initialize_app(cred)
+
+db = firestore.client()
 
 @app.route('/api/chatbot', methods=['POST'])
 def chatbot():
@@ -19,6 +21,15 @@ def chatbot():
     response = jsonify(response_data)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
+@app.route('/api/users/get', methods=['GET'])
+def get_users():
+    users_ref = db.collection('users')
+    users = users_ref.stream()
+    users_data = [user.to_dict() for user in users]
+    response_data = jsonify(users_data)
+    response_data.headers.add('Access-Control-Allow-Origin', '*')
+    return response_data
 
 @app.route('/api/users/login', methods=['POST'])
 def login():
