@@ -1,19 +1,19 @@
 import { StyledButton, Loader } from './Button.styles';
 
-const Button = ({ onClick = '', text, type = 'button', className = 'button', icon = '', loading, style }) => {
+const Button = (props) => {
     return (
-        <StyledButton className={className} type={type} onClick={onClick} style={style}>
-            {!loading && (
+        <StyledButton className={props.className} type={props.type} onClick={props.onClick} style={props.style}>
+            {!props.loading && (
                 <>
-                    <span>{text}</span>
-                    {icon && (
+                    <span>{props.text}</span>
+                    {props.icon && (
                         <span className="material-symbols-rounded">
-              {icon}
+              {props.icon}
             </span>
                     )}
                 </>
             )}
-            {loading && (
+            {props.loading && (
                 <Loader className="loader" />
             )}
         </StyledButton>

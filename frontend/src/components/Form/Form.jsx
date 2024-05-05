@@ -23,12 +23,13 @@ const LoginForm = () => {
     return (
         <>
             <form>
-                <Input type="email" label="Email address" name="email" id="email" value={email}
+                <Input type="email" placeholder={""} label="Email address" name="email" id="email" value={email}
                        onChange={e => setEmail(e.target.value)}/>
-                <Input type="password" label="Password" name="password" id="password" value={password}
+                <Input type="password" placeholder={""} label="Password" name="password" id="password" value={password}
                        onChange={e => setPassword(e.target.value)}/>
                 <ModalSubmit>
-                    <Button type="submit"
+                    <Button className={"button"}
+                            type="submit"
                             text={"Login"}
                             loading={loading}
                             onClick={handleSubmit}
@@ -59,14 +60,15 @@ const RegisterForm = () => {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <Input type="text" label="Username" name="username" id="username" value={username}
+                <Input type="text" placeholder={""} label="Username" name="username" id="username" value={username}
                        onChange={e => setUsername(e.target.value)}/>
-                <Input type="email" label="Email address" name="email" id="email" value={email}
+                <Input type="email" placeholder={""} label="Email address" name="email" id="email" value={email}
                        onChange={e => setEmail(e.target.value)}/>
-                <Input type="password" label="Password" name="password" id="password" value={password}
+                <Input type="password" placeholder={""} label="Password" name="password" id="password" value={password}
                        onChange={e => setPassword(e.target.value)}/>
                 <ModalSubmit>
-                    <Button type="submit"
+                    <Button className={"button"}
+                            type="submit"
                             text={"Register"}
                             loading={loading}
                             onClick={handleSubmit}
@@ -77,15 +79,22 @@ const RegisterForm = () => {
     );
 };
 
-const SettingsForm = ({handleSubmit, loading}) => {
+const SettingsForm = () => {
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true)
+    }
+
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <Input type="text" label="New Username" name="newUsername" id="newUsername"/>
-                <Input type="email" label="New Email address" name="newEmail" id="newEmail"/>
-                <Input type="password" label="New Password" name="newPassword" id="newPassword"/>
+                <Input type="text" placeholder={""} label="New Username" name="newUsername" id="newUsername"/>
+                <Input type="email" placeholder={""} label="New Email address" name="newEmail" id="newEmail"/>
+                <Input type="password" placeholder={""} label="New Password" name="newPassword" id="newPassword"/>
                 <ModalSubmit>
-                    <Button type="submit"
+                    <Button className={"button"}
                             text={"Update"}
                             loading={loading}
                             onClick={handleSubmit}

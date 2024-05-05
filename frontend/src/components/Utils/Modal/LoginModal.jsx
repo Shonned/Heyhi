@@ -16,7 +16,7 @@ const LoginModal = ({onClose, modalId}) => {
                 </ModalClose>
             </ModalHeader>
             <ModalBody>
-                <LoginForm />
+                <LoginForm/>
             </ModalBody>
         </>
     );

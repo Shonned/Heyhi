@@ -16,7 +16,7 @@ const RegisterModal = ({onClose, modalId}) => {
                 </ModalClose>
             </ModalHeader>
             <ModalBody>
-                <RegisterForm />
+                <RegisterForm/>
             </ModalBody>
         </>
     );
