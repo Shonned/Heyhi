@@ -2,16 +2,45 @@ import {useEffect, useState} from "react";
 import Input from "@components/Form/Input/Input.jsx";
 import {ModalSubmit} from "@components/Utils/Modal/Modal.styles.js";
 import Button from "@components/Form/Button/Button.jsx";
-import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import {GoogleAuthProvider, FacebookAuthProvider, signInWithPopup} from "firebase/auth";
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
 import {auth, db} from "./Firebase.jsx";
 import {setDoc, doc, getDoc} from "firebase/firestore";
 import {toast} from "react-toastify";
 import {AuthChoice, ExternAuthServiceBtn, Form} from "./Form.styles.js";
 import {FcGoogle} from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 
 const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (!userDocSnap.exists()) {
+            const createdAt = new Date();
+            await setDoc(userDocRef, {
+                email: user.email,
+                username: user.displayName,
+                created_at: createdAt,
+                updated_at: createdAt,
+            });
+        }
+
+        window.location.href = "/";
+        toast.success("Sign in successfully.", {
+            position: "top-right",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const handleFacebookSignIn = async () => {
+    const provider = new FacebookAuthProvider();
     try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
@@ -75,6 +104,13 @@ const LoginForm = () => {
                                           text={"Login with Google"}
                                           onClick={handleGoogleSignIn}
                                           style={{width: '100%'}}/>
+                    <ExternAuthServiceBtn
+                        className={"button facebook"}
+                        serviceIcon={<FaFacebook />}
+                        text={"Login with Facebook"}
+                        onClick={handleFacebookSignIn}
+                        style={{ width: '100%' }}
+                    />
                 </AuthChoice>
                 <ModalSubmit>
                     <Button className={"button"}
@@ -140,6 +176,13 @@ const RegisterForm = () => {
                                           text={"Register with Google"}
                                           onClick={handleGoogleSignIn}
                                           style={{width: '100%'}}/>
+                    <ExternAuthServiceBtn
+                        className={"button facebook"}
+                        serviceIcon={<FaFacebook />}
+                        text={"Login with Facebook"}
+                        onClick={handleFacebookSignIn}
+                        style={{ width: '100%' }}
+                    />
                 </AuthChoice>
                 <ModalSubmit>
                     <Button className={"button"}
