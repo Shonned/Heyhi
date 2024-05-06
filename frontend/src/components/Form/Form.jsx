@@ -132,7 +132,18 @@ const SettingsForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setLoading(true)
+        setLoading(true);
+    }
+
+    const handleSignOut = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+        try {
+            await auth.signOut();
+            window.location.href = "/";
+        } catch (e) {
+            console.log(e.message);
+        }
     }
 
     return (
@@ -146,6 +157,11 @@ const SettingsForm = () => {
                            value={userDetails.email}
                            onChange={e => setEmail(e.target.value)}/>
                     <ModalSubmit>
+                        <Button className={"button danger"}
+                                text={"Logout"}
+                                loading={loading}
+                                onClick={handleSignOut}
+                                style={{width: '100%'}}/>
                         <Button className={"button"}
                                 text={"Update"}
                                 loading={loading}
