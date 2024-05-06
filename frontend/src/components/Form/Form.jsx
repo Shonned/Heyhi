@@ -2,10 +2,40 @@ import {useEffect, useState} from "react";
 import Input from "@components/Form/Input/Input.jsx";
 import {ModalSubmit} from "@components/Utils/Modal/Modal.styles.js";
 import Button from "@components/Form/Button/Button.jsx";
+import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
 import {auth, db} from "./Firebase.jsx";
 import {setDoc, doc, getDoc} from "firebase/firestore";
 import {toast} from "react-toastify";
+
+const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        console.log(user);
+
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (!userDocSnap.exists()) {
+            const createdAt = new Date();
+            await setDoc(userDocRef, {
+                email: user.email,
+                username: user.displayName,
+                created_at: createdAt,
+                updated_at: createdAt,
+            });
+        }
+
+        window.location.href = "/";
+        toast.success("Sign in successfully.", {
+            position: "top-right",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 const LoginForm = () => {
     const [loading, setLoading] = useState(false);
@@ -41,6 +71,10 @@ const LoginForm = () => {
                             text={"Login"}
                             loading={loading}
                             onClick={handleSubmit}
+                            style={{width: '100%'}}/>
+                    <Button className={"button"}
+                            text={"Login with Google"}
+                            onClick={handleGoogleSignIn}
                             style={{width: '100%'}}/>
                 </ModalSubmit>
             </form>
@@ -96,6 +130,10 @@ const RegisterForm = () => {
                             text={"Register"}
                             loading={loading}
                             onClick={handleSubmit}
+                            style={{width: '100%'}}/>
+                    <Button className={"button"}
+                            text={"Register with Google"}
+                            onClick={handleGoogleSignIn}
                             style={{width: '100%'}}/>
                 </ModalSubmit>
             </form>
