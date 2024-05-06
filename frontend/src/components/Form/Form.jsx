@@ -15,7 +15,6 @@ const handleGoogleSignIn = async () => {
     try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
-        console.log(user);
 
         const userDocRef = doc(db, "users", user.uid);
         const userDocSnap = await getDoc(userDocRef);

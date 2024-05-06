@@ -1,4 +1,6 @@
-import {StyledButton, Loader, ButtonServiceIcon} from './Button.styles';
+import {StyledButton, ButtonServiceIcon} from './Button.styles';
+import { tailspin } from 'ldrs'
+tailspin.register()
 
 const Button = (props) => {
     return (
@@ -19,7 +21,12 @@ const Button = (props) => {
                 </>
             )}
             {props.loading && (
-                <Loader className="loader"/>
+                <l-tailspin
+                size="23"
+                stroke="4"
+                speed="0.9"
+                color="white"
+                ></l-tailspin>
             )}
         </StyledButton>
     );

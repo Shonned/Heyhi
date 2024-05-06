@@ -74,3 +74,7 @@ ul, li {
 .animate__animated {
     animation-duration: 500ms;
 }
+
+.Toastify__toast-theme--dark {
+    background: var(--background-color);
+}
