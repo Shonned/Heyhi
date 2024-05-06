@@ -3,6 +3,10 @@ import Input from "@components/Form/Input/Input.jsx";
 import {ModalSubmit} from "@components/Utils/Modal/Modal.styles.js";
 import Button from "@components/Form/Button/Button.jsx";
 import axios from "axios";
+import {createUserWithEmailAndPassword} from "firebase/auth"
+import {auth, db} from "./Firebase.jsx";
+import {setDoc, doc} from "firebase/firestore";
+import {toast} from "react-toastify";
 
 const LoginForm = () => {
     const [loading, setLoading] = useState(false);
@@ -50,10 +54,26 @@ const RegisterForm = () => {
         event.preventDefault();
         setLoading(true);
         try {
-            const request = await axios.post('http://localhost:5000/api/users/register', {username, email, password});
-            console.log(request.data)
-        } catch (error) {
-            console.error(error);
+            await createUserWithEmailAndPassword(auth, email, password);
+            const user = auth.currentUser;
+            console.log(user);
+            if(user) {
+                const createdAt = new Date();
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    username: username,
+                    created_at: createdAt,
+                    updated_at: createdAt,
+                });
+            }
+            console.log("Ok");
+            toast.success("User successfully registered!", {
+                position: "top-right"
+            });
+        } catch (e) {
+            toast.error(e.message, {
+                position: "top-right",
+            });
         }
     };
 

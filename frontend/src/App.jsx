@@ -4,6 +4,9 @@ import ChatBot from "./components/ChatBot/ChatBot.jsx";
 import Modal from "./components/Utils/Modal/Modal.jsx";
 import {useState} from "react";
 
+import { ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
     const [modals, setModals] = useState({});
 
@@ -24,6 +27,7 @@ function App() {
                 {modals.login && <Modal modalId="login" onClose={handleCloseModal} />}
                 {modals.register && <Modal modalId="register" onClose={handleCloseModal} />}
                 {modals.settings && <Modal modalId="settings" onClose={handleCloseModal} />}
+                <ToastContainer />
             </div>
         </>
     );
