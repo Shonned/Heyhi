@@ -17,6 +17,7 @@ const LoginForm = () => {
         setLoading(true);
         try {
             await signInWithEmailAndPassword(auth, email, password);
+            window.location.href = "/";
             toast.success("Sign in successfully.", {
                 position: "top-right",
             });
@@ -110,12 +111,15 @@ const SettingsForm = () => {
 
     const fetchUserData = async () => {
         auth.onAuthStateChanged(async (user) => {
-            console.log(user);
-            const docRef = doc(db, "Users", user.uid);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                setUserDetails(docSnap.data());
-                console.log(docSnap.data());
+            if (user) {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    setUserDetails(docSnap.data());
+                    console.log(docSnap.data());
+                } else {
+                    console.log("No such document!");
+                }
             } else {
                 console.log("User not connected");
             }
@@ -136,10 +140,10 @@ const SettingsForm = () => {
             {userDetails && (
                 <form onSubmit={handleSubmit}>
                     <Input type="text" placeholder={""} label="Username" name="newUsername" id="newUsername"
-                           value={username}
+                           value={userDetails.username}
                            onChange={e => setUsername(e.target.value)}/>
                     <Input type="email" placeholder={""} label="Email address" name="newEmail" id="newEmail"
-                           value={email}
+                           value={userDetails.email}
                            onChange={e => setEmail(e.target.value)}/>
                     <ModalSubmit>
                         <Button className={"button"}
