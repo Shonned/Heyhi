@@ -5,12 +5,12 @@ import {
     SearchBar,
     HistoryMessages,
     HistoryMessage,
-    Time,
+    Time, HistoryNotLogged, HistoryNotLoggedContent,
 } from './History.styles.js';
-import Button from "@components/Form/Button/Button.jsx";
 import Input from "@components/Form/Input/Input.jsx";
 import {useState} from "react";
 import _ from 'lodash';
+import { PiWarningOctagonBold } from "react-icons/pi";
 
 const History = (props) => {
 
@@ -63,10 +63,12 @@ const History = (props) => {
                     </HistoryMessages>
                 )}
                 {!props.user && (
-                    <Button className={"button"}
-                            text={"Please log in to view your history."}
-                            onClick={() => props.onOpenModal('login')}
-                            style={{width: '100%'}}/>
+                    <HistoryNotLogged>
+                        <HistoryNotLoggedContent>
+                            <PiWarningOctagonBold style={{ fontSize: '45px', color: 'var(--light-grey-color)', marginBottom: '10px' }} />
+                            <span>Log in to view your history</span>
+                        </HistoryNotLoggedContent>
+                    </HistoryNotLogged>
                 )}
             </HistoryContent>
         </HistoryContainer>

@@ -70,7 +70,8 @@ export const ModalClose = styled.div`
 export const ModalAuthSwitch = styled.p`
     padding-top: 5px;
     color: var(--white);
-    font-size: .8rem;
+    font-size: .9rem;
+    font-weight: 500;
 
     span {
         color: var(--primary-color);

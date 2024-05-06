@@ -33,6 +33,12 @@ export const StyledButton = styled.button`
     }
 `;
 
+export const ButtonServiceIcon = styled.span`
+    display: flex;
+    margin-right: 5px;
+    font-size: 20px;
+`;
+
 export const Loader = styled.span`
   width: 23px;
   height: 23px;

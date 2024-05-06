@@ -7,6 +7,8 @@ import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "fireba
 import {auth, db} from "./Firebase.jsx";
 import {setDoc, doc, getDoc} from "firebase/firestore";
 import {toast} from "react-toastify";
+import {AuthChoice, ExternAuthServiceBtn, Form} from "./Form.styles.js";
+import {FcGoogle} from "react-icons/fc";
 
 const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -60,11 +62,21 @@ const LoginForm = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <Input type="email" placeholder={""} label="Email address" name="email" id="email" value={email}
                        onChange={e => setEmail(e.target.value)}/>
                 <Input type="password" placeholder={""} label="Password" name="password" id="password" value={password}
                        onChange={e => setPassword(e.target.value)}/>
+                <AuthChoice>
+                    <div className="separator">
+                        <span>OR</span>
+                    </div>
+                    <ExternAuthServiceBtn className={"button google"}
+                                          serviceIcon={<FcGoogle/>}
+                                          text={"Login with Google"}
+                                          onClick={handleGoogleSignIn}
+                                          style={{width: '100%'}}/>
+                </AuthChoice>
                 <ModalSubmit>
                     <Button className={"button"}
                             type="submit"
@@ -72,12 +84,8 @@ const LoginForm = () => {
                             loading={loading}
                             onClick={handleSubmit}
                             style={{width: '100%'}}/>
-                    <Button className={"button"}
-                            text={"Login with Google"}
-                            onClick={handleGoogleSignIn}
-                            style={{width: '100%'}}/>
                 </ModalSubmit>
-            </form>
+            </Form>
         </>
     );
 };
@@ -117,13 +125,23 @@ const RegisterForm = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <Input type="text" placeholder={""} label="Username" name="username" id="username" value={username}
                        onChange={e => setUsername(e.target.value)}/>
                 <Input type="email" placeholder={""} label="Email address" name="email" id="email" value={email}
                        onChange={e => setEmail(e.target.value)}/>
                 <Input type="password" placeholder={""} label="Password" name="password" id="password" value={password}
                        onChange={e => setPassword(e.target.value)}/>
+                <AuthChoice>
+                    <div className="separator">
+                        <span>OR</span>
+                    </div>
+                    <ExternAuthServiceBtn className={"button google"}
+                                          serviceIcon={<FcGoogle/>}
+                                          text={"Register with Google"}
+                                          onClick={handleGoogleSignIn}
+                                          style={{width: '100%'}}/>
+                </AuthChoice>
                 <ModalSubmit>
                     <Button className={"button"}
                             type="submit"
@@ -131,12 +149,8 @@ const RegisterForm = () => {
                             loading={loading}
                             onClick={handleSubmit}
                             style={{width: '100%'}}/>
-                    <Button className={"button"}
-                            text={"Register with Google"}
-                            onClick={handleGoogleSignIn}
-                            style={{width: '100%'}}/>
                 </ModalSubmit>
-            </form>
+            </Form>
         </>
     );
 };
@@ -187,7 +201,7 @@ const SettingsForm = () => {
     return (
         <>
             {userDetails && (
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                     <Input type="text" placeholder={""} label="Username" name="newUsername" id="newUsername"
                            value={userDetails.username}
                            onChange={e => setUsername(e.target.value)}/>
@@ -206,7 +220,7 @@ const SettingsForm = () => {
                                 onClick={handleSubmit}
                                 style={{width: '100%'}}/>
                     </ModalSubmit>
-                </form>
+                </Form>
             )}
         </>
     );

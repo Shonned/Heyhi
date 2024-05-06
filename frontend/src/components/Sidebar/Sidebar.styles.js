@@ -5,9 +5,10 @@ export const StyledSidebar = styled.aside`
     top: 0;
     left: 0;
     height: 100vh;
-    width: 65px;
+    width: 70px;
     padding: 10px 0;
     background: var(--background-color);
+    border-right: 1px solid var(--grey-color);
 
     @media screen and (max-width: 400px) {
         top: auto;
@@ -49,64 +50,65 @@ export const StyledSidebarItems = styled.ul`
 `;
 
 export const StyledSidebarItem = styled.li`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  margin-top: 10px;
-  background: transparent;
-  border-radius: 10px;
-  transition: all .3s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    background: transparent;
+    border-radius: 10px;
+    transition: all .3s;
 
-  &.active,
-  &:hover {
-    background: var(--grey-color);
-  }
-
-  &:active {
-    transform: scale(.90);
-  }
-
-  span {
-    font-size: 27px;
-    color: var(--light-grey-color);
-  }
-
-  &.active span,
-  &:hover span {
-    color: var(--white);
-  }
-
-  &.sidebar-user {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 45px;
-    width: 45px;
-    background: var(--grey-color);
-    border-radius: 50%;
-    cursor: pointer;
-
-    @media screen and (max-width: 400px) {
-      position: relative;
-      bottom: inherit;
-      left: inherit;
-      transform: translate(0);
-      background: transparent;
+    &.active,
+    &:hover {
+        background: var(--grey-color);
     }
 
-    span {
-      font-size: 30px;
-      transition: all .3s;
+    &:active {
+        transform: scale(.90);
+    }
+    
+    svg {
+        font-size: 25px;
+        color: var(--light-grey-color);
+        transition: all .3s;
     }
 
-    &:active span {
-      transform: scale(.9);
+    &.active svg,
+    &:hover svg {
+        color: var(--white);
     }
-  }
+
+    &.sidebar-user {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 45px;
+        width: 45px;
+        background: var(--grey-color);
+        border-radius: 50%;
+        cursor: pointer;
+
+        @media screen and (max-width: 400px) {
+            position: relative;
+            bottom: inherit;
+            left: inherit;
+            transform: translate(0);
+            background: transparent;
+        }
+
+        svg {
+            font-size: 20px;
+            transition: all .3s;
+        }
+
+        &:active svg {
+            transform: scale(.9);
+        }
+    }
 `;
 
 export const StyledSidebarLink = styled.a`

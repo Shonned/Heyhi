@@ -5,6 +5,9 @@ import {
     StyledSidebarLink,
     StyledSidebarLogo
 } from "./Sidebar.styles.js";
+import {FaUser} from "react-icons/fa6";
+import {RiMessage3Fill} from "react-icons/ri";
+import {IoMdSettings} from "react-icons/io";
 
 const Sidebar = (props) => {
     return (
@@ -13,25 +16,19 @@ const Sidebar = (props) => {
             <StyledSidebarItems>
                 <StyledSidebarItem className="active">
                     <StyledSidebarLink href="#">
-                        <span className="material-symbols-rounded">
-                          chat
-                        </span>
+                        <RiMessage3Fill/>
                     </StyledSidebarLink>
                 </StyledSidebarItem>
                 {props.user && (
                     <StyledSidebarItem onClick={() => props.onOpenModal('settings')}>
                         <StyledSidebarLink href="#">
-                        <span className="material-symbols-rounded">
-                          settings
-                        </span>
+                            <IoMdSettings/>
                         </StyledSidebarLink>
                     </StyledSidebarItem>
                 )}
                 {!props.user && (
                     <StyledSidebarItem className="sidebar-user" onClick={() => props.onOpenModal('login')}>
-                      <span className="material-symbols-rounded">
-                        person
-                      </span>
+                        <FaUser/>
                     </StyledSidebarItem>
                 )}
             </StyledSidebarItems>

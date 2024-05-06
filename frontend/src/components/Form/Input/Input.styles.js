@@ -7,7 +7,7 @@ export const InputGroup = styled.div`
 
 export const InputLabel = styled.label`
     position: absolute;
-    top: 13px;
+    top: 11px;
     left: 17px;
     width: 75%;
     background: var(--background-color);
@@ -32,7 +32,7 @@ export const InputLabelIcon = styled.label`
 export const TextInput = styled.input`
     position: relative;
     width: 100%;
-    padding: 10px 13px;
+    padding: 10px 15px;
     font-size: 15px;
     border-radius: 25px;
     background: var(--background-color);
