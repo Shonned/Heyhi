@@ -1,11 +1,10 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Input from "@components/Form/Input/Input.jsx";
 import {ModalSubmit} from "@components/Utils/Modal/Modal.styles.js";
 import Button from "@components/Form/Button/Button.jsx";
-import axios from "axios";
-import {createUserWithEmailAndPassword} from "firebase/auth"
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
 import {auth, db} from "./Firebase.jsx";
-import {setDoc, doc} from "firebase/firestore";
+import {setDoc, doc, getDoc} from "firebase/firestore";
 import {toast} from "react-toastify";
 
 const LoginForm = () => {
@@ -17,16 +16,20 @@ const LoginForm = () => {
         event.preventDefault();
         setLoading(true);
         try {
-            const request = await axios.post('http://localhost:5000/api/users/login', {email, password});
-            console.log(request.data)
-        } catch (error) {
-            console.error(error);
+            await signInWithEmailAndPassword(auth, email, password);
+            toast.success("Sign in successfully.", {
+                position: "top-right",
+            });
+        } catch (e) {
+            toast.error(e.message, {
+                position: "top-right",
+            });
         }
     };
 
     return (
         <>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Input type="email" placeholder={""} label="Email address" name="email" id="email" value={email}
                        onChange={e => setEmail(e.target.value)}/>
                 <Input type="password" placeholder={""} label="Password" name="password" id="password" value={password}
@@ -57,7 +60,7 @@ const RegisterForm = () => {
             await createUserWithEmailAndPassword(auth, email, password);
             const user = auth.currentUser;
             console.log(user);
-            if(user) {
+            if (user) {
                 const createdAt = new Date();
                 await setDoc(doc(db, "users", user.uid), {
                     email: user.email,
@@ -101,26 +104,52 @@ const RegisterForm = () => {
 
 const SettingsForm = () => {
     const [loading, setLoading] = useState(false);
+    const [userDetails, setUserDetails] = useState(null);
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const fetchUserData = async () => {
+        auth.onAuthStateChanged(async (user) => {
+            console.log(user);
+            const docRef = doc(db, "Users", user.uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setUserDetails(docSnap.data());
+                console.log(docSnap.data());
+            } else {
+                console.log("User not connected");
+            }
+        });
+    }
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
         setLoading(true)
     }
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <Input type="text" placeholder={""} label="New Username" name="newUsername" id="newUsername"/>
-                <Input type="email" placeholder={""} label="New Email address" name="newEmail" id="newEmail"/>
-                <Input type="password" placeholder={""} label="New Password" name="newPassword" id="newPassword"/>
-                <ModalSubmit>
-                    <Button className={"button"}
-                            text={"Update"}
-                            loading={loading}
-                            onClick={handleSubmit}
-                            style={{width: '100%'}}/>
-                </ModalSubmit>
-            </form>
+            {userDetails && (
+                <form onSubmit={handleSubmit}>
+                    <Input type="text" placeholder={""} label="Username" name="newUsername" id="newUsername"
+                           value={username}
+                           onChange={e => setUsername(e.target.value)}/>
+                    <Input type="email" placeholder={""} label="Email address" name="newEmail" id="newEmail"
+                           value={email}
+                           onChange={e => setEmail(e.target.value)}/>
+                    <ModalSubmit>
+                        <Button className={"button"}
+                                text={"Update"}
+                                loading={loading}
+                                onClick={handleSubmit}
+                                style={{width: '100%'}}/>
+                    </ModalSubmit>
+                </form>
+            )}
         </>
     );
 };

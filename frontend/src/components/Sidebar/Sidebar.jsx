@@ -25,7 +25,7 @@ const Sidebar = ({onOpenModal}) => {
                         </span>
                     </StyledSidebarLink>
                 </StyledSidebarItem>
-                <StyledSidebarItem className="sidebar-user" onClick={() => onOpenModal('register')}>
+                <StyledSidebarItem className="sidebar-user" onClick={() => onOpenModal('login')}>
                       <span className="material-symbols-rounded">
                         person
                       </span>
