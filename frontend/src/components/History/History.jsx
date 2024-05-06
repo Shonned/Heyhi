@@ -7,11 +7,12 @@ import {
     HistoryMessage,
     Time,
 } from './History.styles.js';
+import Button from "@components/Form/Button/Button.jsx";
 import Input from "@components/Form/Input/Input.jsx";
-import { useState } from "react";
+import {useState} from "react";
 import _ from 'lodash';
 
-const History = () => {
+const History = (props) => {
 
     const [searchTerm, setSearchTerm] = useState('');
     const text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores explicabo facere.";
@@ -41,24 +42,32 @@ const History = () => {
                         />
                     </SearchBar>
                 </HistoryHeader>
-                <HistoryMessages>
-                    <HistoryMessage className="active animate__animated animate__fadeInDown">
-                        <Time>
+                {props.user && (
+                    <HistoryMessages>
+                        <HistoryMessage className="active animate__animated animate__fadeInDown">
+                            <Time>
                           <span className="material-symbols-rounded">
                             schedule
                           </span> Wed. 9:32am
-                        </Time>
-                        {truncatedText}
-                    </HistoryMessage>
-                    <HistoryMessage className="animate__animated animate__fadeInDown">
-                        <Time>
+                            </Time>
+                            {truncatedText}
+                        </HistoryMessage>
+                        <HistoryMessage className="animate__animated animate__fadeInDown">
+                            <Time>
                           <span className="material-symbols-rounded">
                             schedule
                           </span> Wed. 9:32am
-                        </Time>
-                        {truncatedText}
-                    </HistoryMessage>
-                </HistoryMessages>
+                            </Time>
+                            {truncatedText}
+                        </HistoryMessage>
+                    </HistoryMessages>
+                )}
+                {!props.user && (
+                    <Button className={"button"}
+                            text={"Please log in to view your history."}
+                            onClick={() => props.onOpenModal('login')}
+                            style={{width: '100%'}}/>
+                )}
             </HistoryContent>
         </HistoryContainer>
     );

@@ -1,6 +1,3 @@
-import {useState} from "react";
-import {LoginForm, RegisterForm, SettingsForm} from "@components/Form/Form.jsx";
-import Button from "@components/Form/Button/Button.jsx";
 import {
     StyledModal,
     AnimatedModalContainer,
@@ -10,14 +7,14 @@ import RegisterModal from "./RegisterModal.jsx";
 import SettingsModal from "./SettingsModal.jsx";
 
 
-const Modal = ({onClose, modalId}) => {
+const Modal = (props) => {
 
     return (
         <StyledModal>
             <AnimatedModalContainer>
-                {modalId === 'login' && <LoginModal modalId={modalId} onClose={onClose}/>}
-                {modalId === 'register' && <RegisterModal modalId={modalId} onClose={onClose}/>}
-                {modalId === 'settings' && <SettingsModal modalId={modalId} onClose={onClose}/>}
+                {props.modalId === 'login' && <LoginModal modalId={props.modalId} onOpenModal={props.onOpenModal} onClose={props.onClose}/>}
+                {props.modalId === 'register' && <RegisterModal modalId={props.modalId} onOpenModal={props.onOpenModal} onClose={props.onClose}/>}
+                {props.modalId === 'settings' && <SettingsModal modalId={props.modalId} onClose={props.onClose}/>}
             </AnimatedModalContainer>
         </StyledModal>
     );

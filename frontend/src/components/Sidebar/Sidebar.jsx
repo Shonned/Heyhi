@@ -6,7 +6,7 @@ import {
     StyledSidebarLogo
 } from "./Sidebar.styles.js";
 
-const Sidebar = ({onOpenModal}) => {
+const Sidebar = (props) => {
     return (
         <StyledSidebar>
             <StyledSidebarLogo/>
@@ -18,18 +18,22 @@ const Sidebar = ({onOpenModal}) => {
                         </span>
                     </StyledSidebarLink>
                 </StyledSidebarItem>
-                <StyledSidebarItem onClick={() => onOpenModal('settings')}>
-                    <StyledSidebarLink href="#">
+                {props.user && (
+                    <StyledSidebarItem onClick={() => props.onOpenModal('settings')}>
+                        <StyledSidebarLink href="#">
                         <span className="material-symbols-rounded">
                           settings
                         </span>
-                    </StyledSidebarLink>
-                </StyledSidebarItem>
-                <StyledSidebarItem className="sidebar-user" onClick={() => onOpenModal('login')}>
+                        </StyledSidebarLink>
+                    </StyledSidebarItem>
+                )}
+                {!props.user && (
+                    <StyledSidebarItem className="sidebar-user" onClick={() => props.onOpenModal('login')}>
                       <span className="material-symbols-rounded">
                         person
                       </span>
-                </StyledSidebarItem>
+                    </StyledSidebarItem>
+                )}
             </StyledSidebarItems>
         </StyledSidebar>
     );

@@ -1,21 +1,26 @@
-import {ModalBody, ModalClose, ModalHeader} from "./Modal.styles.js";
+import {ModalAuthSwitch, ModalBody, ModalClose, ModalHeader, ModalHeaderContent} from "./Modal.styles.js";
 import {LoginForm} from "@components/Form/Form.jsx";
 
-const LoginModal = ({onClose, modalId}) => {
+const LoginModal = (props) => {
 
     return (
         <>
             <ModalHeader>
-                <h2>
-                    Login
-                </h2>
-                <ModalClose onClick={() => onClose(modalId)}>
-                            <span className="icon material-symbols-rounded">
-                                close
-                            </span>
-                </ModalClose>
+                <ModalHeaderContent>
+                    <h2>
+                        Login
+                    </h2>
+                    <ModalClose onClick={() => props.onClose(props.modalId)}>
+                                <span className="icon material-symbols-rounded">
+                                    close
+                                </span>
+                    </ModalClose>
+                </ModalHeaderContent>
+                <ModalAuthSwitch>
+                    Don't have an account? <span onClick={() => props.onOpenModal('register')}>Sign up now</span>
+                </ModalAuthSwitch>
             </ModalHeader>
-            <ModalBody>
+            <ModalBody className={"auth-modal"}>
                 <LoginForm/>
             </ModalBody>
         </>

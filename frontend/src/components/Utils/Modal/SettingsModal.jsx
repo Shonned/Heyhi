@@ -1,8 +1,8 @@
 import {useState} from "react";
-import {ModalBody, ModalClose, ModalHeader, ModalSubmit} from "./Modal.styles.js";
+import {ModalBody, ModalClose, ModalHeader, ModalHeaderContent} from "./Modal.styles.js";
 import {SettingsForm} from "@components/Form/Form.jsx";
 
-const SettingsModal = ({onClose, modalId}) => {
+const SettingsModal = (props) => {
 
     const [loading, setLoading] = useState(false);
 
@@ -14,14 +14,16 @@ const SettingsModal = ({onClose, modalId}) => {
     return (
         <>
             <ModalHeader>
-                <h2>
-                    Settings
-                </h2>
-                <ModalClose onClick={() => onClose(modalId)}>
+                <ModalHeaderContent>
+                    <h2>
+                        Settings
+                    </h2>
+                    <ModalClose onClick={() => props.onClose(props.modalId)}>
                             <span className="icon material-symbols-rounded">
                                 close
                             </span>
-                </ModalClose>
+                    </ModalClose>
+                </ModalHeaderContent>
             </ModalHeader>
             <ModalBody>
                 <SettingsForm loading={loading} handleSubmit={handleSubmit}/>
