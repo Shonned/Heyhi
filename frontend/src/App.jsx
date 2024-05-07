@@ -1,6 +1,6 @@
 import Sidebar from "./components/Sidebar/Sidebar.jsx";
 import History from "./components/History/History.jsx";
-import ChatBot from "./components/ChatBot/ChatBot.jsx";
+import ChooseAssistant from "./components/ChatBot/ChooseAssistant.jsx";
 import Modal from "./components/Utils/Modal/Modal.jsx";
 import {useEffect, useState} from "react";
 import {auth} from "@components/Form/Firebase.jsx";
@@ -39,7 +39,7 @@ function App() {
             <div className="app">
                 <Sidebar onOpenModal={handleOpenModal} user={user}/>
                 <History onOpenModal={handleOpenModal} user={user} />
-                <ChatBot user={user} />
+                <ChooseAssistant user={user} />
                 {modals.login && <Modal modalId="login" onOpenModal={handleOpenModal} onClose={handleCloseModal} />}
                 {modals.register && <Modal modalId="register" onOpenModal={handleOpenModal} onClose={handleCloseModal} />}
                 {modals.settings && <Modal modalId="settings" onClose={handleCloseModal} />}

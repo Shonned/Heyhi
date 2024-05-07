@@ -5,7 +5,7 @@ const getContentClassName = (content) => {
     return content.length <= 50 ? 'content short-content' : 'content';
 };
 
-const MessageBot = ({ content, options, onOptionClick }) => {
+const MessageBot = (props) => {
 
     const [selectedOption, setSelectedOptions] = useState(null);
     const [isOptionSelected, setIsOptionSelected] = useState(false);
@@ -13,17 +13,17 @@ const MessageBot = ({ content, options, onOptionClick }) => {
     const handleOptionClick = (option) => {
         setSelectedOptions(option);
         setIsOptionSelected(true);
-        onOptionClick(option);
+        props.onOptionClick(option);
     }
 
     return (
         <Message className="message message-bot animate__animated animate__fadeInUp">
             <User>Bot</User>
             <ContentFlex>
-                <Content className={getContentClassName(content)}>{content}</Content>
-                {options && (
+                <Content className={getContentClassName(props.content)}>{props.content}</Content>
+                {props.options && (
                     <Options>
-                        {options.map((option, index) => (
+                        {props.options.map((option, index) => (
                             <Option
                                 key={index}
                                 className={`option ${selectedOption === option ? 'selected' : ''}`}
@@ -42,12 +42,12 @@ const MessageBot = ({ content, options, onOptionClick }) => {
     );
 };
 
-const MessageUser = ({ content, options }) => {
+const MessageUser = (props) => {
     return (
         <Message className="message message-user animate__animated animate__fadeInUp">
             <User>You</User>
             <ContentFlex>
-                <Content className={getContentClassName(content)}>{content}</Content>
+                <Content className={getContentClassName(props.content)}>{props.content}</Content>
             </ContentFlex>
         </Message>
     );

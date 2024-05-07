@@ -11,7 +11,7 @@ import {MessageBot, MessageUser} from './Message/Message.jsx';
 import Input from "@components/Form/Input/Input.jsx";
 import {getBotResponseByName} from './Data/botData.js';
 
-const ChatBot = () => {
+const ChooseAssistant = () => {
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
     const [pendingResponse, setPendingResponse] = useState(false);
@@ -32,9 +32,9 @@ const ChatBot = () => {
 
         setTimeout(async () => {
             try {
-                const response = await axios.post('http://localhost:5000/api/chatbot', {input});
+                const response = await axios.post('http://localhost:8000/api/conversation/create?user_uid=1');
                 const botResponse = response.data;
-                addMessage(botResponse.content, true, botResponse.options);
+                console.log(botResponse);
             } catch (error) {
                 console.error(error);
                 addMessage('An error occurred while processing your request.', true);
@@ -42,7 +42,6 @@ const ChatBot = () => {
             setPendingResponse(false);
         }, delay);
     };
-
     const handleOptionClick = (option) => {
         sendRequest(option);
     };
@@ -104,4 +103,4 @@ const ChatBot = () => {
     );
 }
 
-export default ChatBot;
+export default ChooseAssistant;

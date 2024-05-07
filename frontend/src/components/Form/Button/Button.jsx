@@ -1,6 +1,7 @@
 import {StyledButton, ButtonServiceIcon} from './Button.styles';
-import { tailspin } from 'ldrs'
-tailspin.register()
+import {ring} from 'ldrs'
+
+ring.register()
 
 const Button = (props) => {
     return (
@@ -21,12 +22,13 @@ const Button = (props) => {
                 </>
             )}
             {props.loading && (
-                <l-tailspin
-                size="23"
-                stroke="4"
-                speed="0.9"
-                color="white"
-                ></l-tailspin>
+                <l-ring
+                    size="23"
+                    stroke="3"
+                    bg-opacity="0"
+                    speed="2"
+                    color="white"
+                ></l-ring>
             )}
         </StyledButton>
     );

@@ -17,7 +17,7 @@ const handleGoogleSignIn = async () => {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        const userDocRef = doc(db, "users", user.uid);
+        const userDocRef = doc(db, "user", user.uid);
         const userDocSnap = await getDoc(userDocRef);
 
         if (!userDocSnap.exists()) {
@@ -45,7 +45,7 @@ const handleFacebookSignIn = async () => {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        const userDocRef = doc(db, "users", user.uid);
+        const userDocRef = doc(db, "user", user.uid);
         const userDocSnap = await getDoc(userDocRef);
 
         if (!userDocSnap.exists()) {
@@ -140,7 +140,7 @@ const RegisterForm = () => {
             console.log(user);
             if (user) {
                 const createdAt = new Date();
-                await setDoc(doc(db, "users", user.uid), {
+                await setDoc(doc(db, "user", user.uid), {
                     email: user.email,
                     username: username,
                     created_at: createdAt,
@@ -206,7 +206,7 @@ const SettingsForm = () => {
     const fetchUserData = async () => {
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                const docRef = doc(db, "users", user.uid);
+                const docRef = doc(db, "user", user.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     setUserDetails(docSnap.data());
