@@ -46,13 +46,6 @@ const ChooseAssistant = (props) => {
         sendRequest(option);
     };
 
-    const handleInputSubmit = (event) => {
-        event.preventDefault();
-        if (request) {
-            sendRequest(request);
-        }
-    };
-
     const addMessage = (content, isBot = false, options = []) => {
         setMessages((prevMessages) => [
             ...prevMessages,
@@ -63,12 +56,6 @@ const ChooseAssistant = (props) => {
             behavior: 'smooth'
         });
     };
-
-    const handleRequest = (e) => {
-        setRequest(e.target.value);
-    }
-
-    const lastMessageHasOptions = messages.length > 0 && messages[messages.length - 1].options.length > 0
 
     return (
         <ChatbotContainer className="chatbot">
@@ -92,11 +79,10 @@ const ChooseAssistant = (props) => {
                 <Input
                     type="text"
                     placeholder="Aa"
-                    onChange={handleRequest}
                     value={request}
-                    disabled={pendingResponse || lastMessageHasOptions}
+                    disabled={true}
                 />
-                <StyledChatbotButton className="button" onClick={handleInputSubmit} text="Send" icon="send"
+                <StyledChatbotButton className="button" text="Send" icon="send"
                                      loading={pendingResponse}/>
             </ChatbotForm>
         </ChatbotContainer>
