@@ -20,6 +20,11 @@ const Conversation = (props) => {
     const [conversation, setConversation] = useState(null);
 
     useEffect(() => {
+        console.log(id)
+        if (!id) {
+            history.push('/'); // Redirige vers la page d'accueil si l'ID n'existe pas
+            return;
+        }
         const fetchData = async () => {
             try {
                 if (id) {
