@@ -11,7 +11,7 @@ import {MessageBot, MessageUser} from './Message/Message.jsx';
 import Input from "@components/Form/Input/Input.jsx";
 import {getBotResponseByName} from './Data/botData.js';
 
-const ChooseAssistant = () => {
+const ChooseAssistant = (props) => {
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
     const [pendingResponse, setPendingResponse] = useState(false);
@@ -32,7 +32,7 @@ const ChooseAssistant = () => {
 
         setTimeout(async () => {
             try {
-                const response = await axios.post('http://localhost:8000/api/conversation/create?user_uid=1');
+                const response = await axios.post('http://localhost:8000/api/conversation/create?user_uid='+ props.user.uid);
                 const botResponse = response.data;
                 console.log(botResponse);
             } catch (error) {

@@ -16,18 +16,23 @@ const handleGoogleSignIn = async () => {
     try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
+        const uid = user.uid;
 
-        const userDocRef = doc(db, "users", user.uid);
+        const userDocRef = doc(db, "users", uid);
         const userDocSnap = await getDoc(userDocRef);
 
         if (!userDocSnap.exists()) {
             const createdAt = new Date();
             await setDoc(userDocRef, {
+                uid: uid,
                 email: user.email,
                 username: user.displayName,
                 created_at: createdAt,
                 updated_at: createdAt,
             });
+            console.log("New user document added for UID:", uid);
+        } else {
+            console.log("User document already exists for UID:", uid);
         }
 
         window.location.href = "/";
@@ -45,7 +50,7 @@ const handleFacebookSignIn = async () => {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        const userDocRef = doc(db, "user", user.uid);
+        const userDocRef = doc(db, "users", user.uid);
         const userDocSnap = await getDoc(userDocRef);
 
         if (!userDocSnap.exists()) {
@@ -147,6 +152,7 @@ const RegisterForm = () => {
                     updated_at: createdAt,
                 });
             }
+            window.location.href = "/";
             toast.success("User successfully registered!", {
                 position: "top-right"
             });
