@@ -5,16 +5,39 @@ import {
     ChatbotForm,
     StyledChatbotButton
 } from './ChatBot.styles.js';
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from 'axios';
 import {MessageBot, MessageUser} from './Message/Message.jsx';
 import Input from "@components/Form/Input/Input.jsx";
 import {getBotResponseByName} from './Data/botData.js';
+import {useParams} from "react-router-dom";
 
-const ChooseAssistant = (props) => {
+const Conversation = (props) => {
+    const {id} = useParams();
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
     const [pendingResponse, setPendingResponse] = useState(false);
+    const [conversation, setConversation] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if (id) {
+                    const response = await axios.get(`http://localhost:8000/api/conversation/get/${id}`);
+                    setConversation(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, [id]);
+
+    useEffect(() => {
+        setConversation(conversation)
+        console.log(conversation)
+    }, [conversation]);
 
     const [messages, setMessages] = useState([
         {
@@ -29,18 +52,6 @@ const ChooseAssistant = (props) => {
         setRequest('');
         setPendingResponse(true);
         const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
-
-        setTimeout(async () => {
-            try {
-                const response = await axios.post('http://localhost:8000/api/conversation/create?user_uid='+ props.user.uid);
-                const chat_uid = response.data.id;
-                window.location.href = "/chat/" + chat_uid;
-            } catch (error) {
-                console.error(error);
-                addMessage('An error occurred while processing your request.', true);
-            }
-            setPendingResponse(false);
-        }, delay);
     };
     const handleOptionClick = (option) => {
         sendRequest(option);
@@ -103,4 +114,4 @@ const ChooseAssistant = (props) => {
     );
 }
 
-export default ChooseAssistant;
+export default Conversation;
