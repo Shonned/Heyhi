@@ -9,7 +9,7 @@ import {setDoc, doc, getDoc} from "firebase/firestore";
 import {toast} from "react-toastify";
 import {AuthChoice, ExternAuthServiceBtn, Form} from "./Form.styles.js";
 import {FcGoogle} from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+import {FaFacebook} from "react-icons/fa";
 
 const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -17,7 +17,7 @@ const handleGoogleSignIn = async () => {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        const userDocRef = doc(db, "user", user.uid);
+        const userDocRef = doc(db, "users", user.uid);
         const userDocSnap = await getDoc(userDocRef);
 
         if (!userDocSnap.exists()) {
@@ -106,10 +106,10 @@ const LoginForm = () => {
                                           style={{width: '100%'}}/>
                     <ExternAuthServiceBtn
                         className={"button facebook"}
-                        serviceIcon={<FaFacebook />}
+                        serviceIcon={<FaFacebook/>}
                         text={"Login with Facebook"}
                         onClick={handleFacebookSignIn}
-                        style={{ width: '100%' }}
+                        style={{width: '100%'}}
                     />
                 </AuthChoice>
                 <ModalSubmit>
@@ -135,19 +135,18 @@ const RegisterForm = () => {
         event.preventDefault();
         setLoading(true);
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            const user = auth.currentUser;
-            console.log(user);
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
             if (user) {
                 const createdAt = new Date();
-                await setDoc(doc(db, "user", user.uid), {
+                await setDoc(doc(db, "users", user.uid), {
+                    uid: user.uid,
                     email: user.email,
                     username: username,
                     created_at: createdAt,
                     updated_at: createdAt,
                 });
             }
-            console.log("Ok");
             toast.success("User successfully registered!", {
                 position: "top-right"
             });
@@ -178,10 +177,10 @@ const RegisterForm = () => {
                                           style={{width: '100%'}}/>
                     <ExternAuthServiceBtn
                         className={"button facebook"}
-                        serviceIcon={<FaFacebook />}
+                        serviceIcon={<FaFacebook/>}
                         text={"Login with Facebook"}
                         onClick={handleFacebookSignIn}
-                        style={{ width: '100%' }}
+                        style={{width: '100%'}}
                     />
                 </AuthChoice>
                 <ModalSubmit>
@@ -206,13 +205,13 @@ const SettingsForm = () => {
     const fetchUserData = async () => {
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                const docRef = doc(db, "user", user.uid);
+                const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     setUserDetails(docSnap.data());
-                    console.log(docSnap.data());
+                    console.log("User details:", docSnap.data());
                 } else {
-                    console.log("No such document!");
+                    console.log("No such document for user with UID:", user.uid);
                 }
             } else {
                 console.log("User not connected");

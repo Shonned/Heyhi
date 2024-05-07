@@ -6,6 +6,6 @@ from ..database import db
 router = APIRouter()
 
 @router.post("/conversation/create")
-async def create_conversation(user_uid: int):
+async def create_conversation(user_uid: str):
     print(f"User ID received: {user_uid}")
     return JSONResponse(content={"user_uid": user_uid}, status_code=201, headers={"Access-Control-Allow-Origin": "*"})
