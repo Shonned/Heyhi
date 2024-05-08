@@ -22,16 +22,14 @@ const History = (props) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [history, setHistory] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState(null);
-    const [authChecked, setAuthChecked] = useState(false);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
 
-    const fetchHistory = async (user_uid) => {
+    const fetchHistory = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/conversation/get_all/' + user_uid);
+            const response = await axios.get('http://localhost:8000/api/conversation/get_all/' + props.user.uid);
             setHistory(response.data);
             setLoading(false);
         } catch (error) {
@@ -40,16 +38,10 @@ const History = (props) => {
     };
 
     useEffect(() => {
-        auth.onAuthStateChanged((user) => {
-            setUser(user);
-            setAuthChecked(true);
-            if (user) {
-                fetchHistory(user.uid);
-            } else {
-                setLoading(false);
-            }
-        });
-    }, []);
+        if (props.logged) {
+            fetchHistory();
+        }
+    }, [props.logged]);
 
     return (
         <HistoryContainer>
@@ -91,7 +83,7 @@ const History = (props) => {
                         ))}
                     </HistoryMessages>
                 )}
-                {!loading && !user && (
+                {!props.logged && (
                     <HistoryNotLogged>
                         <HistoryNotLoggedContent>
                             <PiWarningOctagonBold
