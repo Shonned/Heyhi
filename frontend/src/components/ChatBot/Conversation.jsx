@@ -30,6 +30,7 @@ const Conversation = (props) => {
                 if (id) {
                     const response = await axios.get(`http://localhost:8000/api/conversation/get/${id}`);
                     setConversation(response.data);
+                    setMessages([]);
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -49,7 +50,6 @@ const Conversation = (props) => {
 
             formattedMessages.forEach(message => {
                 addMessage(message.content, message.isBot, message.options);
-                console.log(1);
             });
         }
     }, [conversation, messages]);
