@@ -14,6 +14,10 @@ export const HistoryContainer = styled.div`
 export const HistoryContent = styled.div`
     height: 100%;
     padding-top: 100px;
+    
+    l-ring {
+        margin: 15px;
+    }
 `;
 
 export const HistoryHeader = styled.div`

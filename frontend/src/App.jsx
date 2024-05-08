@@ -12,9 +12,12 @@ import Conversation from "@components/ChatBot/Conversation.jsx";
 
 function App() {
     const [user, setUser] = useState(null);
+    const [authChecked, setAuthChecked] = useState(false);
+
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             setUser(user);
+            setAuthChecked(true);
         })
     }, []);
 

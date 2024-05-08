@@ -5,27 +5,51 @@ import {
     SearchBar,
     HistoryMessages,
     HistoryMessage,
-    Time, HistoryNotLogged, HistoryNotLoggedContent,
+    Time,
+    HistoryNotLogged,
+    HistoryNotLoggedContent,
 } from './History.styles.js';
 import Input from "@components/Form/Input/Input.jsx";
-import {useState} from "react";
-import _ from 'lodash';
-import { PiWarningOctagonBold } from "react-icons/pi";
+import {useEffect, useState} from "react";
+import {ring} from 'ldrs'
+import {PiWarningOctagonBold} from "react-icons/pi";
+import axios from "axios";
+import {auth} from "@components/Form/Firebase.jsx";
+
+ring.register()
 
 const History = (props) => {
-
     const [searchTerm, setSearchTerm] = useState('');
-    const text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores explicabo facere.";
+    const [history, setHistory] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
+    const [authChecked, setAuthChecked] = useState(false);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
 
-    const truncatedText = _.truncate(text, {
-        length: 80,
-        separator: ' ',
-        omission: '...',
-    });
+    const fetchHistory = async (user_uid) => {
+        try {
+            const response = await axios.get('http://localhost:8000/api/conversation/get_all/' + user_uid);
+            setHistory(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        auth.onAuthStateChanged((user) => {
+            setUser(user);
+            setAuthChecked(true);
+            if (user) {
+                fetchHistory(user.uid);
+            } else {
+                setLoading(false);
+            }
+        });
+    }, []);
 
     return (
         <HistoryContainer>
@@ -42,30 +66,36 @@ const History = (props) => {
                         />
                     </SearchBar>
                 </HistoryHeader>
-                {props.user && (
+                {loading && (
+                    <l-ring
+                        size="23"
+                        stroke="3"
+                        bg-opacity="0"
+                        speed="2"
+                        color="white"
+                    ></l-ring>
+                )}
+                {!loading && history && (
                     <HistoryMessages>
-                        <HistoryMessage className="active animate__animated animate__fadeInDown">
-                            <Time>
-                          <span className="material-symbols-rounded">
-                            schedule
-                          </span> Wed. 9:32am
-                            </Time>
-                            {truncatedText}
-                        </HistoryMessage>
-                        <HistoryMessage className="animate__animated animate__fadeInDown">
-                            <Time>
-                          <span className="material-symbols-rounded">
-                            schedule
-                          </span> Wed. 9:32am
-                            </Time>
-                            {truncatedText}
-                        </HistoryMessage>
+                        {history.map((conversation, index) => (
+                            <HistoryMessage key={index} className="animate__animated animate__fadeInDown">
+                                <Time>
+                    <span className="material-symbols-rounded">
+                        schedule
+                    </span> {conversation.conversation_info.updated_at}
+                                </Time>
+                                {conversation.messages.length > 0 && (
+                                    <div>{conversation.messages[conversation.messages.length - 1].content}</div>
+                                )}
+                            </HistoryMessage>
+                        ))}
                     </HistoryMessages>
                 )}
-                {!props.user && (
+                {!loading && !user && (
                     <HistoryNotLogged>
                         <HistoryNotLoggedContent>
-                            <PiWarningOctagonBold style={{ fontSize: '45px', color: 'var(--light-grey-color)', marginBottom: '10px' }} />
+                            <PiWarningOctagonBold
+                                style={{fontSize: '45px', color: 'var(--light-grey-color)', marginBottom: '10px'}}/>
                             <span>Log in to view your history</span>
                         </HistoryNotLoggedContent>
                     </HistoryNotLogged>
