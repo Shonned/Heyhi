@@ -9,7 +9,6 @@ import {useEffect, useRef, useState} from "react";
 import axios from 'axios';
 import {MessageBot, MessageUser} from './Message/Message.jsx';
 import Input from "@components/Form/Input/Input.jsx";
-import {getBotResponseByName} from './Data/botData.js';
 import {useParams} from "react-router-dom";
 
 const Conversation = (props) => {
