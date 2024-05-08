@@ -14,7 +14,6 @@ import {useEffect, useState} from "react";
 import {ring} from 'ldrs'
 import {PiWarningOctagonBold} from "react-icons/pi";
 import axios from "axios";
-import {auth} from "@components/Form/Firebase.jsx";
 
 ring.register()
 
@@ -43,6 +42,10 @@ const History = (props) => {
         }
     }, [props.logged]);
 
+    const redirectToChat = (conv_uid) => {
+        window.location.href = "/chat/" + conv_uid;
+    }
+
     return (
         <HistoryContainer>
             <HistoryContent>
@@ -70,7 +73,8 @@ const History = (props) => {
                 {!loading && history && (
                     <HistoryMessages>
                         {history.map((conversation, index) => (
-                            <HistoryMessage key={index} className="animate__animated animate__fadeInDown">
+                            <HistoryMessage key={index} className="animate__animated animate__fadeInDown"
+                                            onClick={() => redirectToChat(conversation.conversation_id)}>
                                 <Time>
                     <span className="material-symbols-rounded">
                         schedule

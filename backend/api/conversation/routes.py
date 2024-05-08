@@ -14,6 +14,7 @@ async def get_conversation(conv_uid: str):
 
     if doc.exists:
         conversation_with_messages["conversation_info"] = doc.to_dict()
+        conversation_with_messages["conversation_info"]["conv_id"] = doc.id
         messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_uid).get()
         conversation_with_messages["messages"] = [message.to_dict() for message in messages_ref]
         return conversation_with_messages
@@ -28,6 +29,7 @@ async def get_all(user_uid: str):
     for conversation in conversations_ref:
         conv_id = conversation.id
         conversation_with_messages = {
+            "conversation_id": conv_id,
             "conversation_info": conversation.to_dict(),
             "messages": []
         }

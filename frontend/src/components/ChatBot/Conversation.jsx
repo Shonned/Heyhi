@@ -19,9 +19,11 @@ const Conversation = (props) => {
     const [pendingResponse, setPendingResponse] = useState(false);
     const [conversation, setConversation] = useState(null);
 
+    const [messages, setMessages] = useState([]);
+
     useEffect(() => {
         if (!id) {
-            history.push('/'); // Redirige vers la page d'accueil si l'ID n'existe pas
+            history.push('/');
             return;
         }
         const fetchData = async () => {
@@ -39,16 +41,20 @@ const Conversation = (props) => {
     }, [id]);
 
     useEffect(() => {
-        setConversation(conversation)
-    }, [conversation]);
+        if (conversation && messages.length === 0) {
+            const formattedMessages = conversation.messages.map(message => ({
+                content: message.content,
+                isBot: message.isBot,
+                options: message.options || [],
+            }));
 
-    const [messages, setMessages] = useState([
-        {
-            content: getBotResponseByName('select_assistant').content,
-            isBot: true,
-            options: getBotResponseByName('select_assistant').options
-        },
-    ]);
+            formattedMessages.forEach(message => {
+                addMessage(message.content, message.isBot, message.options);
+                console.log(1);
+            });
+        }
+    }, [conversation, messages]);
+
 
     const sendRequest = async (input) => {
         addMessage(input);
@@ -56,6 +62,7 @@ const Conversation = (props) => {
         setPendingResponse(true);
         const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
     };
+
     const handleOptionClick = (option) => {
         sendRequest(option);
     };
@@ -69,7 +76,7 @@ const Conversation = (props) => {
 
     const addMessage = (content, isBot = false, options = []) => {
         setMessages((prevMessages) => [
-            ...prevMessages,
+            ...(prevMessages || []),
             {content, isBot, options},
         ]);
         chatbotContentRef.current.scrollTo({
@@ -82,13 +89,13 @@ const Conversation = (props) => {
         setRequest(e.target.value);
     }
 
-    const lastMessageHasOptions = messages.length > 0 && messages[messages.length - 1].options.length > 0
+    //const lastMessageHasOptions = messages.length > 0 && messages[messages.length - 1].options.length > 0
 
     return (
         <ChatbotContainer className="chatbot">
             <ChatbotContent className="chatbot-content" ref={chatbotContentRef}>
                 <ChatbotMessages className="chatbot-messages">
-                    {messages.map((message, index) =>
+                    {messages && messages.map((message, index) =>
                         message.isBot ? (
                             <MessageBot
                                 key={index}
@@ -108,7 +115,7 @@ const Conversation = (props) => {
                     placeholder="Aa"
                     onChange={handleRequest}
                     value={request}
-                    disabled={pendingResponse || lastMessageHasOptions}
+                    disabled={pendingResponse}
                 />
                 <StyledChatbotButton className="button" onClick={handleInputSubmit} text="Send" icon="send"
                                      loading={pendingResponse}/>
