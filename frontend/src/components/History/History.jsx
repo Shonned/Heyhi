@@ -11,6 +11,7 @@ import {
 } from './History.styles.js';
 import Input from "@components/Form/Input/Input.jsx";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {ring} from 'ldrs'
 import {PiWarningOctagonBold} from "react-icons/pi";
 import axios from "axios";
@@ -21,6 +22,7 @@ const History = (props) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [history, setHistory] = useState(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -43,7 +45,7 @@ const History = (props) => {
     }, [props.logged]);
 
     const redirectToChat = (conv_uid) => {
-        window.location.href = "/chat/" + conv_uid;
+        navigate(`/chat/${conv_uid}`);
     }
 
     return (

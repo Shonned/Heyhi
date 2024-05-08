@@ -3,7 +3,7 @@ import History from "./components/History/History.jsx";
 import ChooseAssistant from "./components/ChatBot/ChooseAssistant.jsx";
 import Modal from "./components/Utils/Modal/Modal.jsx";
 import {useEffect, useState} from "react";
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import {auth} from "@components/Form/Firebase.jsx";
 
 import {ToastContainer} from "react-toastify";
@@ -61,16 +61,12 @@ function App() {
     return (
         <Router>
             <div className="app">
-                <Sidebar onOpenModal={handleOpenModal} user={userDetails} />
-                <History onOpenModal={handleOpenModal} user={userDetails} logged={userDetails !== null} />
-                <Switch>
-                    <Route path="/chat/:id">
-                        <Conversation user={userDetails}/>
-                    </Route>
-                    <Route path="/">
-                        <ChooseAssistant user={userDetails}/>
-                    </Route>
-                </Switch>
+                <Sidebar onOpenModal={handleOpenModal} user={userDetails}/>
+                <History onOpenModal={handleOpenModal} user={userDetails} logged={userDetails !== null}/>
+                <Routes>
+                    <Route path="/chat/:id" element={<Conversation user={userDetails}/>}/>
+                    <Route path="/" element={<ChooseAssistant user={userDetails}/>}/>
+                </Routes>
                 {modals.login && <Modal modalId="login" onOpenModal={handleOpenModal} onClose={handleCloseModal}/>}
                 {modals.register &&
                     <Modal modalId="register" onOpenModal={handleOpenModal} onClose={handleCloseModal}/>}
