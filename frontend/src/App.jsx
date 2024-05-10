@@ -15,27 +15,22 @@ import {db} from "./components/Form/Firebase.jsx";
 function App() {
     const [userDetails, setUserDetails] = useState(null);
 
-    const fetchUserData = async () => {
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                const docRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    setUserDetails(docSnap.data());
-                    console.log("User details:", docSnap.data());
-                } else {
-                    console.log("No such document for user with UID:", user.uid);
-                }
-            } else {
-                console.log("User not connected");
-            }
-        });
-    }
-
     useEffect(() => {
         const fetchData = async () => {
-            await fetchUserData();
-            console.log("User details:", userDetails);
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    const docRef = doc(db, "users", user.uid);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        setUserDetails(docSnap.data());
+                        console.log("User details:", docSnap.data());
+                    } else {
+                        console.log("No such document for user with UID:", user.uid);
+                    }
+                } else {
+                    console.log("User not connected");
+                }
+            });
         };
         fetchData();
     }, []);

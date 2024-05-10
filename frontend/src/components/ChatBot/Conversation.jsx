@@ -22,7 +22,9 @@ const Conversation = (props) => {
 
     useEffect(() => {
         if (!id) {
-            history.push('/');
+            if (history.location.pathname !== '/') {
+                history.push('/');
+            }
             return;
         }
         const fetchData = async () => {
@@ -38,7 +40,7 @@ const Conversation = (props) => {
         };
 
         fetchData();
-    }, [id]);
+    }, [id, history]);
 
     useEffect(() => {
         if (conversation && messages.length === 0) {
@@ -48,9 +50,11 @@ const Conversation = (props) => {
                 options: message.options || [],
             }));
 
-            formattedMessages.forEach(message => {
-                addMessage(message.content, message.isBot, message.options);
-            });
+            if (messages.length === 0) {
+                formattedMessages.forEach(message => {
+                    addMessage(message.content, message.isBot, message.options);
+                });
+            }
         }
     }, [conversation, messages]);
 
