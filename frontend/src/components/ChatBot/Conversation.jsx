@@ -55,11 +55,19 @@ const Conversation = (props) => {
     }, [conversation, messages]);
 
 
-    const sendRequest = async (input) => {
-        addMessage(input);
+    const sendRequest = async (request) => {
         setRequest('');
         setPendingResponse(true);
-        const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
+        try {
+            if (id) {
+                const response = await axios.post(`http://localhost:8000/api/message/create?conv_uid=` + id + '&content=' + request);
+                const newMessage = response.data;
+                addMessage(newMessage.content, false, []);
+                setPendingResponse(false)
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
     const handleOptionClick = (option) => {
