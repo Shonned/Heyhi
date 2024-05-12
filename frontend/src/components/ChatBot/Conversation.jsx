@@ -64,10 +64,14 @@ const Conversation = (props) => {
         setPendingResponse(true);
         try {
             if (id) {
+                const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
                 const response = await axios.post(`http://localhost:8000/api/message/create?conv_uid=` + id + '&content=' + request);
                 const newMessage = response.data;
-                addMessage(newMessage.content, false, []);
-                setPendingResponse(false)
+                addMessage(newMessage.user_message, false, []);
+                setTimeout( () => {
+                    addMessage(newMessage.bot_response, true, []);
+                    setPendingResponse(false)
+                }, delay);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
