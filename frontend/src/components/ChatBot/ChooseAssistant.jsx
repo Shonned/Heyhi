@@ -10,11 +10,13 @@ import axios from 'axios';
 import {MessageBot, MessageUser} from './Message/Message.jsx';
 import Input from "@components/Form/Input/Input.jsx";
 import {getBotResponseByName} from './Data/botData.js';
+import {useNavigate} from "react-router-dom";
 
 const ChooseAssistant = (props) => {
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
     const [pendingResponse, setPendingResponse] = useState(false);
+    const navigate = useNavigate();
 
     const [messages, setMessages] = useState([
         {
@@ -34,7 +36,7 @@ const ChooseAssistant = (props) => {
             try {
                 const response = await axios.post('http://localhost:8000/api/conversation/create?user_uid='+ props.user.uid);
                 const chat_uid = response.data.id;
-                window.location.href = "/chat/" + chat_uid;
+                navigate(`/chat/` + chat_uid);
             } catch (error) {
                 console.error(error);
                 addMessage('An error occurred while processing your request.', true);
