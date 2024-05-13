@@ -47,6 +47,7 @@ export const HistoryMessage = styled.div`
     color: var(--light-grey-color);
     font-size: 15px;
     transition: all .3s;
+    animation-duration: .6s;
     cursor: pointer;
 
     &.active,

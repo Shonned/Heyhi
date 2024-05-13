@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Message = styled.div`
   display: flex;
   margin-bottom: 15px;
+  animation-duration: .7s;
 
   &.message-user {
     flex-direction: row-reverse;
