@@ -10,6 +10,7 @@ import {toast} from "react-toastify";
 import {AuthChoice, ExternAuthServiceBtn, Form} from "./Form.styles.js";
 import {FcGoogle} from "react-icons/fc";
 import {FaFacebook} from "react-icons/fa";
+import axios from "axios";
 
 const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -214,8 +215,11 @@ const SettingsForm = () => {
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
-                    setUserDetails(docSnap.data());
-                    console.log("User details:", docSnap.data());
+                    const userData = docSnap.data();
+                    setUserDetails(userData);
+                    setUsername(userData.username);
+                    setEmail(userData.email);
+                    console.log("User details:", userData);
                 } else {
                     console.log("No such document for user with UID:", user.uid);
                 }
@@ -229,9 +233,25 @@ const SettingsForm = () => {
         fetchUserData();
     }, []);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
+        const formData = {
+            uid: userDetails.uid,
+            username: username,
+            email: email
+        }
+        try {
+            const response = await axios.put('http://localhost:8000/api/user/update', formData);
+            toast.success("User successfully updated!", {
+                position: "top-right"
+            });
+        } catch (error) {
+            toast.error(error.message, {
+                position: "top-right",
+            });
+        }
+        setLoading(false);
     }
 
     const handleSignOut = async (event) => {
@@ -250,10 +270,10 @@ const SettingsForm = () => {
             {userDetails && (
                 <Form onSubmit={handleSubmit}>
                     <Input type="text" placeholder={""} label="Username" name="newUsername" id="newUsername"
-                           value={userDetails.username}
+                           value={username}
                            onChange={e => setUsername(e.target.value)}/>
                     <Input type="email" placeholder={""} label="Email address" name="newEmail" id="newEmail"
-                           value={userDetails.email}
+                           value={email}
                            onChange={e => setEmail(e.target.value)}/>
                     <ModalSubmit>
                         <Button className={"button danger"}
