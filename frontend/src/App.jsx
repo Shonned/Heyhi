@@ -14,6 +14,7 @@ import {db} from "./components/Form/Firebase.jsx";
 
 function App() {
     const [userDetails, setUserDetails] = useState(null);
+    const [notifyMessage, setNotifyMessage] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -53,13 +54,17 @@ function App() {
         setModals((prevModals) => ({...prevModals, [modalId]: false}));
     };
 
+    const notifyHistory = () => {
+        setNotifyMessage(!notifyMessage)
+    }
+
     return (
         <Router>
             <div className="app">
                 <Sidebar onOpenModal={handleOpenModal} user={userDetails}/>
-                <History onOpenModal={handleOpenModal} user={userDetails} logged={userDetails !== null}/>
+                <History onOpenModal={handleOpenModal} user={userDetails} logged={userDetails !== null} notifyHistory={notifyMessage}/>
                 <Routes>
-                    <Route path="/chat/:id" element={<Conversation user={userDetails}/>}/>
+                    <Route path="/chat/:id" element={<Conversation user={userDetails} notifyHistory={notifyHistory}/>}/>
                     <Route path="/" element={<ChooseAssistant user={userDetails}/>}/>
                 </Routes>
                 {modals.login && <Modal modalId="login" onOpenModal={handleOpenModal} onClose={handleCloseModal}/>}

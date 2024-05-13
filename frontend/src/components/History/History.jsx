@@ -47,7 +47,7 @@ const History = (props) => {
         if (props.logged) {
             fetchHistory();
         }
-    }, [props.logged]);
+    }, [props.logged, props.notifyHistory]);
 
     const redirectToChat = (conv_uid) => {
         navigate(`/chat/${conv_uid}`);
@@ -81,8 +81,7 @@ const History = (props) => {
                                 <Time>
                                     <span className="material-symbols-rounded">
                                         schedule
-                                    </span>
-                                    {formatToEnglishDate(conversation.conversation_info.updated_at)}
+                                    </span> {formatToEnglishDate(conversation.conversation_info.updated_at)}
                                 </Time>
                                 {conversation.messages.length > 0 && (
                                     <div>{conversation.messages[conversation.messages.length - 1].content}</div>

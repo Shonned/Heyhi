@@ -68,8 +68,9 @@ const Conversation = (props) => {
                 const response = await axios.post(`http://localhost:8000/api/message/create?conv_uid=` + id + '&content=' + request);
                 const newMessage = response.data;
                 addMessage(newMessage.user_message, false, []);
-                setTimeout( () => {
+                setTimeout(() => {
                     addMessage(newMessage.bot_response, true, []);
+                    props.notifyHistory();
                     setPendingResponse(false)
                 }, delay);
             }
