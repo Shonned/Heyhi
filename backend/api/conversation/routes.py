@@ -1,9 +1,16 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
 from datetime import datetime
+
+from pydantic import BaseModel
+
 from ..database import db
 
 router = APIRouter()
+
+
+class Conversation(BaseModel):
+    user_uid: str
 
 
 @router.get("/conversation/get/{conv_uid}")
@@ -15,7 +22,8 @@ async def get_conversation(conv_uid: str):
     if doc.exists:
         conversation_with_messages["conversation_info"] = doc.to_dict()
         conversation_with_messages["conversation_info"]["conv_id"] = doc.id
-        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_uid).order_by(u'created_at').get()
+        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_uid).order_by(
+            u'created_at').get()
         conversation_with_messages["messages"] = [message.to_dict() for message in messages_ref]
         return conversation_with_messages
     else:
@@ -33,7 +41,8 @@ async def get_all(user_uid: str):
             "conversation_info": conversation.to_dict(),
             "messages": []
         }
-        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_id).order_by(u'created_at').get()
+        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_id).order_by(
+            u'created_at').get()
         for message in messages_ref:
             conversation_with_messages["messages"].append(message.to_dict())
         user_conversations_with_messages.append(conversation_with_messages)
@@ -41,9 +50,9 @@ async def get_all(user_uid: str):
 
 
 @router.post("/conversation/create")
-async def create_conversation(user_uid: str):
+async def create_conversation(conv: Conversation):
     data = {
-        "user_uid": user_uid,
+        "user_uid": conv.user_uid,
         "assistant": "default",
         "created_at": datetime.utcnow(),
         "updated_at": datetime.utcnow()

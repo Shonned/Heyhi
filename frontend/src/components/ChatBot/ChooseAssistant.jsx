@@ -34,7 +34,9 @@ const ChooseAssistant = (props) => {
 
         setTimeout(async () => {
             try {
-                const response = await axios.post('http://localhost:8000/api/conversation/create?user_uid='+ props.user.uid);
+                const response = await axios.post('http://localhost:8000/api/conversation/create', {
+                    user_uid: props.user.uid
+                });
                 const chat_uid = response.data.id;
                 navigate(`/chat/` + chat_uid);
             } catch (error) {
