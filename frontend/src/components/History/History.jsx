@@ -31,7 +31,12 @@ const History = (props) => {
     const fetchHistory = async () => {
         try {
             const response = await axios.get('http://localhost:8000/api/conversation/get_all/' + props.user.uid);
-            setHistory(response.data);
+            const sortedHistory = response.data.sort((a, b) => {
+                const dateA = new Date(a.conversation_info.updated_at);
+                const dateB = new Date(b.conversation_info.updated_at);
+                return dateB - dateA;
+            });
+            setHistory(sortedHistory);
             setLoading(false);
         } catch (error) {
             console.error(error);
@@ -47,6 +52,11 @@ const History = (props) => {
     const redirectToChat = (conv_uid) => {
         navigate(`/chat/${conv_uid}`);
     }
+
+    const formatToEnglishDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleString('en-EN', {timeZone: 'UTC'});
+    };
 
     return (
         <HistoryContainer>
@@ -69,9 +79,10 @@ const History = (props) => {
                             <HistoryMessage key={index} className="animate__animated animate__fadeInDown"
                                             onClick={() => redirectToChat(conversation.conversation_id)}>
                                 <Time>
-                    <span className="material-symbols-rounded">
-                        schedule
-                    </span> {conversation.conversation_info.updated_at}
+                                    <span className="material-symbols-rounded">
+                                        schedule
+                                    </span>
+                                    {formatToEnglishDate(conversation.conversation_info.updated_at)}
                                 </Time>
                                 {conversation.messages.length > 0 && (
                                     <div>{conversation.messages[conversation.messages.length - 1].content}</div>
