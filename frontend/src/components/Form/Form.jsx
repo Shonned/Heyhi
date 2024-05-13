@@ -276,7 +276,7 @@ const SettingsForm = () => {
                            value={email}
                            onChange={e => setEmail(e.target.value)}/>
                     <ModalSubmit>
-                        <Button className={"button danger"}
+                        <Button className={"button danger logout"}
                                 text={"Logout"}
                                 loading={loading}
                                 onClick={handleSignOut}

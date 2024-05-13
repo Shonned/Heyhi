@@ -97,4 +97,8 @@ export const ModalSubmit = styled.div`
     padding: 15px 20px;
     width: 100%;
     background: var(--background-color);
+    
+    button.logout {
+        margin-bottom: 10px;
+    }
 `;

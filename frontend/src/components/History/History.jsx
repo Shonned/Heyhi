@@ -53,15 +53,6 @@ const History = (props) => {
             <HistoryContent>
                 <HistoryHeader>
                     <h2 className="title">History</h2>
-                    <SearchBar>
-                        <Input
-                            type="text"
-                            placeholder="Search..."
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            icon={'search'}
-                        />
-                    </SearchBar>
                 </HistoryHeader>
                 {loading && (
                     <l-ring
