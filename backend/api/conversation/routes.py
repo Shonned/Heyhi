@@ -21,7 +21,7 @@ async def get_conversation(conv_uid: str):
     if doc.exists:
         conversation_with_messages["conversation_info"] = doc.to_dict()
         conversation_with_messages["conversation_info"]["conv_id"] = doc.id
-        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_uid).order_by(u'updated_at').get()
+        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_uid).order_by(u'created_at').get()
         conversation_with_messages["messages"] = [message.to_dict() for message in messages_ref]
         return conversation_with_messages
     else:
@@ -39,11 +39,12 @@ async def get_all(user_uid: str):
             "conversation_info": conversation.to_dict(),
             "messages": []
         }
-        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_id).order_by(u'updated_at').get()
+        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_id).order_by(u'created_at').get()
         for message in messages_ref:
             conversation_with_messages["messages"].append(message.to_dict())
         user_conversations_with_messages.append(conversation_with_messages)
     return user_conversations_with_messages
+
 
 
 @router.post("/conversation/create")
