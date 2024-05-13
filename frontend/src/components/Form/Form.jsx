@@ -88,7 +88,7 @@ const LoginForm = () => {
                 position: "top-right",
             });
         } catch (e) {
-            toast.error(e.message, {
+            toast.error("An error has occurred.", {
                 position: "top-right",
             });
         }
@@ -158,7 +158,7 @@ const RegisterForm = () => {
                 position: "top-right"
             });
         } catch (e) {
-            toast.error(e.message, {
+            toast.error("An error has occurred.", {
                 position: "top-right",
             });
         }
@@ -261,7 +261,9 @@ const SettingsForm = () => {
             await auth.signOut();
             window.location.href = "/";
         } catch (e) {
-            console.log(e.message);
+            toast.error("An error has occurred.", {
+                position: "top-right",
+            });
         }
     }
 
