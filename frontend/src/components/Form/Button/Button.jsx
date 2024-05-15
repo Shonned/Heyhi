@@ -5,7 +5,7 @@ ring.register()
 
 const Button = (props) => {
     return (
-        <StyledButton className={props.className} type={props.type} onClick={props.onClick} style={props.style}>
+        <StyledButton className={props.className} type={props.type} onClick={props.onClick} style={props.style} disabled={props.disabled}>
             {!props.loading && (
                 <>
                     {props.serviceIcon && (
@@ -23,11 +23,11 @@ const Button = (props) => {
             )}
             {props.loading && (
                 <l-ring
-                    size="23"
+                    size="21"
                     stroke="3"
                     bg-opacity="0"
                     speed="2"
-                    color="white"
+                    color="#171717"
                 ></l-ring>
             )}
         </StyledButton>

@@ -15,6 +15,7 @@ const Conversation = (props) => {
     const {id} = useParams();
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
+    const [disabled, setDisabled] = useState(true);
     const [pendingResponse, setPendingResponse] = useState(false);
     const [conversation, setConversation] = useState(null);
 
@@ -101,6 +102,14 @@ const Conversation = (props) => {
         });
     };
 
+    useEffect(() => {
+        if (request.length > 0) {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
+    }, [request]);
+
     const handleRequest = (e) => {
         setRequest(e.target.value);
     }
@@ -133,8 +142,8 @@ const Conversation = (props) => {
                     value={request}
                     disabled={pendingResponse}
                 />
-                <StyledChatbotButton className="button" onClick={handleInputSubmit} text="Send" icon="send"
-                                     loading={pendingResponse}/>
+                <StyledChatbotButton className="button icon_only" onClick={handleInputSubmit} icon="arrow_upward"
+                                     loading={pendingResponse} disabled={disabled}/>
             </ChatbotForm>
         </ChatbotContainer>
     );

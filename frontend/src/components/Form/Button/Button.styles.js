@@ -22,13 +22,30 @@ export const StyledButton = styled.button`
         &.danger {
             background: #F44336;
         }
-        
-        &:active {
+
+        &:not(.icon_only):active {
             transform: scale(.98);
         }
 
         span:not(.loader) {
             margin-left: 7px;
+        }
+
+        &.icon_only {
+            background: white;
+            color: var(--background-color);
+            min-width: 34px;
+            height: 34px;
+            padding: 0;
+
+            span {
+                margin-left: 0;
+            }
+        }
+
+        &:disabled {
+            background: var(--light-grey-color);
+            color: var(--background-color);
         }
     }
 `;

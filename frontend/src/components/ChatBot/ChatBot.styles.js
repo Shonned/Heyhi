@@ -42,18 +42,33 @@ export const ChatbotMessages = styled.div`
 `;
 
 export const ChatbotForm = styled.div`
-  position: sticky;
-  bottom: 25px;
-  left: 0;
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  border-radius: 0 0 25px 25px;
-  background: var(--foreground-color);
+    position: sticky;
+    bottom: 25px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 0 0 25px 25px;
+    background: var(--foreground-color);
 
-  @media screen and (max-width: 400px) {
-    position: relative;
-  }
+    button {
+        position: absolute;
+        top: 50%;
+        right: 24px;
+        transform: translateY(-50%);
+    }
+
+    input {
+        padding: 14px 15px;
+        
+        &:focus {
+            border: 2px solid var(--light-grey-color);
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        position: relative;
+    }
 `;
 
 export const StyledChatbotButton = styled(Button)`

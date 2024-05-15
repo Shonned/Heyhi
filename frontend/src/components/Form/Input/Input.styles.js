@@ -36,7 +36,7 @@ export const TextInput = styled.input`
     font-size: 15px;
     border-radius: 25px;
     background: var(--background-color);
-    color: var(--light-grey-color);
+    color: var(--white);
     border: 2px solid var(--grey-color);
     cursor: pointer;
 
