@@ -239,7 +239,6 @@ const SettingsForm = () => {
         const formData = {
             uid: userDetails.uid,
             username: username,
-            email: email
         }
         try {
             const response = await axios.put('http://localhost:8000/api/user/update', formData);
@@ -276,7 +275,7 @@ const SettingsForm = () => {
                            onChange={e => setUsername(e.target.value)}/>
                     <Input type="email" placeholder={""} label="Email address" name="newEmail" id="newEmail"
                            value={email}
-                           onChange={e => setEmail(e.target.value)}/>
+                           disabled={true}/>
                     <ModalSubmit>
                         <Button className={"button danger logout"}
                                 text={"Logout"}

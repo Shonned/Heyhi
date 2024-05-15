@@ -27,7 +27,7 @@ const Button = (props) => {
                     stroke="3"
                     bg-opacity="0"
                     speed="2"
-                    color="#171717"
+                    color={!props.icon ? "white" : "#171717"}
                 ></l-ring>
             )}
         </StyledButton>

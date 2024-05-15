@@ -8,7 +8,6 @@ router = APIRouter()
 class UserUpdate(BaseModel):
     uid: str
     username: str
-    email: str
 
 
 @router.put("/user/update")
@@ -17,7 +16,6 @@ async def update_user(user_update: UserUpdate):
         user_ref = db.collection('users').document(user_update.uid)
         user_ref.update({
             'username': user_update.username,
-            'email': user_update.email
         })
 
         return {"message": "User updated successfully"}
