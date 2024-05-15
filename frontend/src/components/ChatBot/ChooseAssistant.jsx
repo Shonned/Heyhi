@@ -86,8 +86,8 @@ const ChooseAssistant = (props) => {
                     value={request}
                     disabled={true}
                 />
-                <StyledChatbotButton className="button" text="Send" icon="send"
-                                     loading={pendingResponse}/>
+                <StyledChatbotButton className="button icon_only" icon="arrow_upward"
+                                     loading={pendingResponse} disabled={true}/>
             </ChatbotForm>
         </ChatbotContainer>
     );

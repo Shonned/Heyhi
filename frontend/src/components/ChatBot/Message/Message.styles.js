@@ -12,10 +12,17 @@ export const Message = styled.div`
 `;
 
 export const User = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--primary-color);
+  background: var(--light-grey-color);
+  border: 1px solid var(--grey-color);
+  color: var(--background-color);
+  font-size: 20px;
+  font-weight: 500;
 `;
 
 export const Content = styled.div`

@@ -25,6 +25,12 @@ export const ModalContainer = styled.div`
     border-radius: 15px;
     animation-duration: 350ms;
     overflow: hidden;
+    
+    @media screen and (max-width: 450px) {
+        height: 100%;
+        width: 100%;
+        border-radius: 0;
+    }
 `;
 
 export const AnimatedModalContainer = styled(ModalContainer)`

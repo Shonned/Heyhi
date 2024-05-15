@@ -18,7 +18,7 @@ const MessageBot = (props) => {
 
     return (
         <Message className="message message-bot animate__animated animate__fadeInUp">
-            <User>Bot</User>
+            <User>B</User>
             <ContentFlex>
                 <Content className={getContentClassName(props.content)}>{props.content}</Content>
                 {props.options && (
@@ -45,7 +45,7 @@ const MessageBot = (props) => {
 const MessageUser = (props) => {
     return (
         <Message className="message message-user animate__animated animate__fadeInUp">
-            <User>You</User>
+            <User>Y</User>
             <ContentFlex>
                 <Content className={getContentClassName(props.content)}>{props.content}</Content>
             </ContentFlex>

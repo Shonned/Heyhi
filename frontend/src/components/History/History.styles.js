@@ -26,6 +26,8 @@ export const HistoryHeader = styled.div`
     left: 0;
     width: 100%;
     padding: 15px;
+    background: var(--background-color);
+    z-index: 2;
 `;
 
 export const SearchBar = styled.div`
@@ -34,7 +36,7 @@ export const SearchBar = styled.div`
 
 export const HistoryMessages = styled.div`
     height: 100%;
-    padding: 15px;
+    padding: 25px 15px 15px;
     overflow-y: scroll;
 `;
 

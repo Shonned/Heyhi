@@ -44,8 +44,9 @@ export const StyledSidebarItems = styled.ul`
 
     @media screen and (max-width: 400px) {
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
         width: 100%;
+        padding: 0 15px;
     }
 `;
 
@@ -108,6 +109,13 @@ export const StyledSidebarItem = styled.li`
         &:active svg {
             transform: scale(.9);
         }
+    }
+    
+    @media screen and (max-width: 400px) {
+        margin-top: 0;
+        height: 40px;
+        width: 40px;
+        background: transparent;
     }
 `;
 
