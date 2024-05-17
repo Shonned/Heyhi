@@ -10,6 +10,7 @@ import axios from 'axios';
 import {MessageBot, MessageUser} from './Message/Message.jsx';
 import Input from "@components/Form/Input/Input.jsx";
 import {useParams} from "react-router-dom";
+import InputFile from "../Form/Input/InputFile.jsx";
 
 const Conversation = (props) => {
     const {id} = useParams();
@@ -135,6 +136,7 @@ const Conversation = (props) => {
                 </ChatbotMessages>
             </ChatbotContent>
             <ChatbotForm className="chatbot-form">
+                <InputFile type={"file"} id={"select_file"} icon={"attach_file"}></InputFile>
                 <Input
                     type="text"
                     placeholder="Aa"
@@ -142,7 +144,7 @@ const Conversation = (props) => {
                     value={request}
                     disabled={pendingResponse}
                 />
-                <StyledChatbotButton className="button icon_only" onClick={handleInputSubmit} icon="arrow_upward"
+                <StyledChatbotButton className="button icon_only send" onClick={handleInputSubmit} icon="arrow_upward"
                                      loading={pendingResponse} disabled={disabled}/>
             </ChatbotForm>
         </ChatbotContainer>

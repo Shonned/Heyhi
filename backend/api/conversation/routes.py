@@ -58,5 +58,16 @@ async def create_conversation(conv: Conversation):
     doc_ref_tuple = db.collection(u'conversations').add(data)
     doc_ref = doc_ref_tuple[1]
     doc_id = doc_ref.id
+
+    response = {
+        "content": "Please send us your personal information file.",
+        "conversation_uid": doc_id,
+        "created_at": datetime.utcnow(),
+        "isBot": True,
+        "updated_at": datetime.utcnow()
+    }
+
+    doc_ref_message_tuple = db.collection(u'messages').add(response)
+
     return JSONResponse(content={"message": "Conversation created", "id": doc_id}, status_code=201,
                         headers={"Access-Control-Allow-Origin": "*"})

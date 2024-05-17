@@ -51,16 +51,18 @@ export const ChatbotForm = styled.div`
     border-radius: 0 0 25px 25px;
     background: var(--foreground-color);
 
-    button {
+    .file-group {
         position: absolute;
         top: 50%;
-        right: 24px;
+        left: 30px;
         transform: translateY(-50%);
+        color: white;
+        z-index: 2;
     }
 
     input {
-        padding: 14px 15px;
-        
+        padding: 14px 15px 14px 50px;
+
         &:focus {
             border: 2px solid var(--light-grey-color);
         }
@@ -72,5 +74,18 @@ export const ChatbotForm = styled.div`
 `;
 
 export const StyledChatbotButton = styled(Button)`
-  margin-left: 15px;
+    &.file {
+        position: absolute;
+        top: 50%;
+        left: 24px;
+        transform: translateY(-50%);
+        z-index: 2;
+    }
+
+    &.send {
+        position: absolute;
+        top: 50%;
+        right: 24px;
+        transform: translateY(-50%);
+    }
 `;

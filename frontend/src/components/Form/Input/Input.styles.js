@@ -68,3 +68,16 @@ export const TextInput = styled.input`
         padding: 10px 13px 10px 40px;
     }
 `;
+
+export const InputFileGroup = styled.div `
+`;
+
+export const FileInput = styled.input `
+    display: none;
+`;
+
+export const InputFileLabel = styled.label `
+    position: relative;
+    display: flex;
+    cursor: pointer;
+`;
