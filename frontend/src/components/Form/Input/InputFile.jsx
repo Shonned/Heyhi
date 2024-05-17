@@ -14,6 +14,7 @@ const InputFile = (props) => {
                 id={props.id}
                 name={props.name}
                 disabled={props.disabled}
+                onChange={props.onChange}
             />
         </InputFileGroup>
     );

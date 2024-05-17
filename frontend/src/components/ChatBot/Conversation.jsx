@@ -14,6 +14,8 @@ import InputFile from "../Form/Input/InputFile.jsx";
 
 const Conversation = (props) => {
     const {id} = useParams();
+    const [userFile, setUserFile] = useState(null);
+    const [fileSelected, setFileSelected] = useState(false);
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
@@ -64,21 +66,7 @@ const Conversation = (props) => {
     const sendRequest = async (request) => {
         setRequest('');
         setPendingResponse(true);
-        try {
-            if (id) {
-                const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
-                const response = await axios.post(`http://localhost:8000/api/message/create?conv_uid=` + id + '&content=' + request);
-                const newMessage = response.data;
-                addMessage(newMessage.user_message, false, []);
-                setTimeout(() => {
-                    addMessage(newMessage.bot_response, true, []);
-                    props.notifyHistory();
-                    setPendingResponse(false)
-                }, delay);
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+        console.log(request)
     };
 
     const handleOptionClick = (option) => {
@@ -87,8 +75,8 @@ const Conversation = (props) => {
 
     const handleInputSubmit = (event) => {
         event.preventDefault();
-        if (request) {
-            sendRequest(request);
+        if (fileSelected) {
+            sendRequest(userFile);
         }
     };
 
@@ -104,16 +92,29 @@ const Conversation = (props) => {
     };
 
     useEffect(() => {
-        if (request.length > 0) {
+        if (request.length > 0 || fileSelected) {
             setDisabled(false);
         } else {
             setDisabled(true);
         }
-    }, [request]);
+    }, [request, fileSelected]);
 
     const handleRequest = (e) => {
         setRequest(e.target.value);
     }
+
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        setUserFile(selectedFile);
+    }
+
+    useEffect(() => {
+        if (userFile) {
+            setFileSelected(true);
+        } else {
+            setFileSelected(false);
+        }
+    }, [userFile]);
 
     //const lastMessageHasOptions = messages.length > 0 && messages[messages.length - 1].options.length > 0
 
@@ -136,7 +137,12 @@ const Conversation = (props) => {
                 </ChatbotMessages>
             </ChatbotContent>
             <ChatbotForm className="chatbot-form">
-                <InputFile type={"file"} id={"select_file"} icon={"attach_file"}></InputFile>
+                <InputFile
+                    type={"file"}
+                    id={"select_file"}
+                    icon={"attach_file"}
+                    onChange={handleFileChange}
+                ></InputFile>
                 <Input
                     type="text"
                     placeholder="Aa"
