@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File
 from fastapi.responses import JSONResponse
 from datetime import datetime
+import json
 
 from pydantic import BaseModel
 
@@ -8,8 +9,11 @@ from ..database import db
 
 router = APIRouter()
 
+
 class Conversation(BaseModel):
     user_uid: str
+    user_data: dict
+    assistant: str
 
 
 @router.get("/conversation/get/{conv_uid}")
@@ -21,7 +25,8 @@ async def get_conversation(conv_uid: str):
     if doc.exists:
         conversation_with_messages["conversation_info"] = doc.to_dict()
         conversation_with_messages["conversation_info"]["conv_id"] = doc.id
-        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_uid).order_by(u'created_at').get()
+        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_uid).order_by(
+            u'created_at').get()
         conversation_with_messages["messages"] = [message.to_dict() for message in messages_ref]
         return conversation_with_messages
     else:
@@ -39,19 +44,46 @@ async def get_all(user_uid: str):
             "conversation_info": conversation.to_dict(),
             "messages": []
         }
-        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_id).order_by(u'created_at').get()
+        messages_ref = db.collection(u'messages').where(u'conversation_uid', u'==', conv_id).order_by(
+            u'created_at').get()
         for message in messages_ref:
             conversation_with_messages["messages"].append(message.to_dict())
         user_conversations_with_messages.append(conversation_with_messages)
     return user_conversations_with_messages
 
 
-
 @router.post("/conversation/create")
-async def create_conversation(conv: Conversation):
+async def create_conversation(
+        additional_data: UploadFile = File(...),
+        user_data: UploadFile = File(...)
+):
+    if additional_data.content_type != "application/json" or user_data.content_type != "application/json":
+        raise HTTPException(status_code=400, detail="Invalid file type")
+
+    additional_contents = await additional_data.read()
+    try:
+        additional_dict = json.loads(additional_contents)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid JSON format in additional_data")
+
+    user_contents = await user_data.read()
+    try:
+        user_dict = json.loads(user_contents)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid JSON format in user_data")
+
+    combined_data = {
+        "user_uid": additional_dict["user_uid"],
+        "assistant": additional_dict["assistant"],
+        "user_data": user_dict
+    }
+
+    conv = Conversation(**combined_data)
+
     data = {
         "user_uid": conv.user_uid,
-        "assistant": "default",
+        "user_data": conv.user_data,
+        "assistant": conv.assistant,
         "created_at": datetime.utcnow(),
         "updated_at": datetime.utcnow()
     }
@@ -60,14 +92,13 @@ async def create_conversation(conv: Conversation):
     doc_id = doc_ref.id
 
     response = {
-        "content": "Please send us your personal information file.",
+        "content": "After analysing your information, we regret to inform you that your request has been refused.",
         "conversation_uid": doc_id,
         "created_at": datetime.utcnow(),
         "isBot": True,
         "updated_at": datetime.utcnow()
     }
-
-    doc_ref_message_tuple = db.collection(u'messages').add(response)
+    db.collection(u'messages').add(response)
 
     return JSONResponse(content={"message": "Conversation created", "id": doc_id}, status_code=201,
                         headers={"Access-Control-Allow-Origin": "*"})

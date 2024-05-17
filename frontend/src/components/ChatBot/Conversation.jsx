@@ -14,8 +14,6 @@ import InputFile from "../Form/Input/InputFile.jsx";
 
 const Conversation = (props) => {
     const {id} = useParams();
-    const [userFile, setUserFile] = useState(null);
-    const [fileSelected, setFileSelected] = useState(false);
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
@@ -66,6 +64,7 @@ const Conversation = (props) => {
     const sendRequest = async (request) => {
         setRequest('');
         setPendingResponse(true);
+        addMessage(request.name, false, [])
         console.log(request)
     };
 
@@ -75,8 +74,8 @@ const Conversation = (props) => {
 
     const handleInputSubmit = (event) => {
         event.preventDefault();
-        if (fileSelected) {
-            sendRequest(userFile);
+        if (request) {
+            sendRequest(request);
         }
     };
 
@@ -91,30 +90,9 @@ const Conversation = (props) => {
         });
     };
 
-    useEffect(() => {
-        if (request.length > 0 || fileSelected) {
-            setDisabled(false);
-        } else {
-            setDisabled(true);
-        }
-    }, [request, fileSelected]);
-
     const handleRequest = (e) => {
         setRequest(e.target.value);
     }
-
-    const handleFileChange = (event) => {
-        const selectedFile = event.target.files[0];
-        setUserFile(selectedFile);
-    }
-
-    useEffect(() => {
-        if (userFile) {
-            setFileSelected(true);
-        } else {
-            setFileSelected(false);
-        }
-    }, [userFile]);
 
     //const lastMessageHasOptions = messages.length > 0 && messages[messages.length - 1].options.length > 0
 
@@ -137,12 +115,6 @@ const Conversation = (props) => {
                 </ChatbotMessages>
             </ChatbotContent>
             <ChatbotForm className="chatbot-form">
-                <InputFile
-                    type={"file"}
-                    id={"select_file"}
-                    icon={"attach_file"}
-                    onChange={handleFileChange}
-                ></InputFile>
                 <Input
                     type="text"
                     placeholder="Aa"
