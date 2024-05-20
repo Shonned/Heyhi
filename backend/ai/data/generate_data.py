@@ -3,26 +3,23 @@ import numpy as np
 
 np.random.seed(42)
 
-
 def generate_credit_history(age):
-    if age < 30:
+    if age < 25:
         return np.random.randint(0, 5)
-    elif age < 50:
-        return np.random.randint(5, 20)
+    elif age < 40:
+        return np.random.randint(0, 15)
     else:
-        return np.random.randint(20, 40)
-
+        return np.random.randint(0, 30)
 
 def approve_loan(income, age, credit_history):
-    if income > 50000 and credit_history > 10 and age < 60:
+    if income > 70000:
         return 1
-    elif income > 70000 and credit_history > 5 and age < 70:
+    elif credit_history > 15 and age < 60:
         return 1
-    elif credit_history > 20 and age < 70:
+    elif income > 50000 and credit_history > 5 and age < 50:
         return 1
     else:
         return 0
-
 
 n = 1000
 ages = np.random.randint(20, 70, n)

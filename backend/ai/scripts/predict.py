@@ -19,9 +19,9 @@ def predict_new_loan(new_demand, model, label_encoders, columns):
 
 if __name__ == "__main__":
     new_demand = {
-        'income': 50000,
-        'credits_history': 1,
-        'age': 30,
+        'income': 71000,
+        'credits_history': 11,
+        'age': 20,
     }
     model_path = os.path.join(os.path.dirname(__file__), '../model/loan_approval_model_optimized.pkl')
     model = joblib.load(model_path)
