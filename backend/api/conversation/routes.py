@@ -91,8 +91,10 @@ async def create_conversation(
     doc_ref = doc_ref_tuple[1]
     doc_id = doc_ref.id
 
+    content = "After analysing your information, we regret to inform you that your request has been refused."
+
     response = {
-        "content": "After analysing your information, we regret to inform you that your request has been refused.",
+        "content": content,
         "conversation_uid": doc_id,
         "created_at": datetime.utcnow(),
         "isBot": True,
