@@ -1,3 +1,13 @@
 {
-  "hey": "hey"
+  "person_age": 21,
+  "person_income": 11520,
+  "person_home_ownership": "OWN",
+  "person_emp_length": 20,
+  "loan_intent": "HOMEIMPROVEMENT",
+  "loan_grade": "C",
+  "loan_amnt": 5000,
+  "loan_int_rate": 0.05,
+  "loan_percent_income": 0.07,
+  "cb_person_default_on_file": "N",
+  "cb_person_cred_hist_length": 25
 }

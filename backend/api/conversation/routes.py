@@ -2,10 +2,9 @@ from fastapi import APIRouter, HTTPException, UploadFile, File
 from fastapi.responses import JSONResponse
 from datetime import datetime
 import json
-
 from pydantic import BaseModel
-
 from ..database import db
+from ...ai.scripts.predict import predict_new_loan, model, label_encoders, columns
 
 router = APIRouter()
 
@@ -91,7 +90,12 @@ async def create_conversation(
     doc_ref = doc_ref_tuple[1]
     doc_id = doc_ref.id
 
+    prediction = predict_new_loan(user_dict, model, label_encoders, columns)
+    print(prediction)
+
     content = "After analysing your information, we regret to inform you that your request has been refused."
+    if prediction == 'Accepted':
+        content = "After analysing your information, we are pleased to inform you that your request has been accepted."
 
     response = {
         "content": content,
