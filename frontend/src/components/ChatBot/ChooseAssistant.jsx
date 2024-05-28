@@ -41,7 +41,7 @@ const ChooseAssistant = (props) => {
         {
             key: 'loan_intent',
             question: 'What is the purpose of the loan?',
-            options: ['HOMEIMPROVEMENT', 'DEBTCONSOLIDATION', 'BUSINESS', 'PERSONAL']
+            options: ['HOMEIMPROVEMENT', 'VENTURE', 'PERSONAL', 'MEDICAL', 'EDUCATION', 'DEBTCONSOLIDATION']
         },
         {
             key: 'loan_grade',
@@ -64,13 +64,18 @@ const ChooseAssistant = (props) => {
     const handleResponseOptionClick = (option) => {
         const currentQuestion = questions[currentQuestionIndex];
         const key = currentQuestion.key;
+        setPendingResponse(true);
 
         if (key === 'select_assistant') {
             setAssistant(option);
         }
 
-        setUserResponses({ ...userResponses, [key]: option });
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        addMessage(option, false, []);
+        setTimeout(() => {
+            setUserResponses({...userResponses, [key]: option});
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setPendingResponse(false);
+        }, [delay])
     };
 
     const handleInputChange = (event) => {
@@ -80,6 +85,7 @@ const ChooseAssistant = (props) => {
     const handleSendResponse = () => {
         const key = questions[currentQuestionIndex].key;
         let response = request;
+        setPendingResponse(true);
 
         if (!isNaN(response) && key !== 'loan_int_rate' && key !== 'loan_percent_income') {
             response = parseInt(response, 10);
@@ -87,9 +93,13 @@ const ChooseAssistant = (props) => {
             response = parseFloat(response);
         }
 
-        setUserResponses({...userResponses, [key]: response});
-        setRequest('');
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        addMessage(response, false, []);
+        setTimeout(() => {
+            setUserResponses({...userResponses, [key]: response});
+            setRequest('');
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setPendingResponse(false);
+        }, [delay])
     };
 
 
