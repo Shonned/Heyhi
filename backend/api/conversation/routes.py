@@ -90,8 +90,7 @@ async def create_conversation(
     doc_ref = doc_ref_tuple[1]
     doc_id = doc_ref.id
 
-    prediction = predict_new_loan(user_dict, model, label_encoders, columns)
-    print(prediction)
+    prediction = predict_new_loan(conv.user_data, model, label_encoders, columns)
 
     content = "After analysing your information, we regret to inform you that your request has been refused."
     if prediction == 'Accepted':

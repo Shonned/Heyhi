@@ -9,10 +9,10 @@ def main():
     #subprocess.run(['python', 'scripts/train.py'])
 
     print("Evaluating the model...")
-    #subprocess.run(['python', 'scripts/evaluate.py'])
+    subprocess.run(['python', 'scripts/evaluate.py'])
 
     print("Prediction for a new application...")
-    subprocess.run(['python', 'scripts/predict.py'])
+    #subprocess.run(['python', 'scripts/predict.py'])
 
 
 if __name__ == "__main__":
