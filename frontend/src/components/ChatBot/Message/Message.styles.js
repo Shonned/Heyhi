@@ -1,14 +1,23 @@
 import styled from 'styled-components';
 
 export const Message = styled.div`
-  display: flex;
-  margin-bottom: 15px;
-  animation-duration: .7s;
+    display: flex;
+    margin-bottom: 15px;
+    animation-duration: .7s;
 
-  &.message-user {
-    flex-direction: row-reverse;
-    justify-content: flex-start;
-  }
+    &.message-user {
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+
+        .content {
+            border-radius: 15px 3px 15px 15px;
+        }
+
+        &.short-content,
+        &.option {
+            border-radius: 25px;
+        }
+    }
 `;
 
 export const User = styled.div`

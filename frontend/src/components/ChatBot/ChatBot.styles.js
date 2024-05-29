@@ -61,7 +61,7 @@ export const ChatbotForm = styled.div`
     }
 
     input {
-        padding: 14px 15px 14px 50px;
+        padding: 14px 15px;
 
         &:focus {
             border: 2px solid var(--light-grey-color);
