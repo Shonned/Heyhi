@@ -49,7 +49,7 @@ const ChooseAssistant = (props) => {
             options: ['A', 'B', 'C', 'D', 'E', 'F', 'G']
         },
         {key: 'loan_amnt', question: 'What is the loan amount?', type: 'number'},
-        {key: 'loan_int_rate', question: 'What is the loan interest rate?', type: 'float'},
+        {key: 'loan_int_rate', question: 'What is the loan interest rate?', type: 'number'},
         {
             key: 'loan_percent_income',
             question: 'What percentage of your income will go to loan payments?',
