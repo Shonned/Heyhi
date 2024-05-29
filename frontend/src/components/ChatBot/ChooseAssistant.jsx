@@ -30,14 +30,14 @@ const ChooseAssistant = (props) => {
             question: 'To get started choose a virtual assistant.',
             options: ['Loan Assistant', 'Health Assistant']
         },
-        {key: 'person_age', question: 'What is your age?'},
-        {key: 'person_income', question: 'What is your income?'},
+        {key: 'person_age', question: 'What is your age?', type: 'number'},
+        {key: 'person_income', question: 'What is your income?', type: 'number'},
         {
             key: 'person_home_ownership',
             question: 'Do you own a home?',
             options: ['OWN', 'RENT', 'MORTGAGE']
         },
-        {key: 'person_emp_length', question: 'How many years have you been employed?'},
+        {key: 'person_emp_length', question: 'How many years have you been employed?', type: 'number'},
         {
             key: 'loan_intent',
             question: 'What is the purpose of the loan?',
@@ -48,15 +48,19 @@ const ChooseAssistant = (props) => {
             question: 'What is the loan grade?',
             options: ['A', 'B', 'C', 'D', 'E', 'F', 'G']
         },
-        {key: 'loan_amnt', question: 'What is the loan amount?'},
-        {key: 'loan_int_rate', question: 'What is the loan interest rate?'},
-        {key: 'loan_percent_income', question: 'What percentage of your income will go to loan payments?'},
+        {key: 'loan_amnt', question: 'What is the loan amount?', type: 'number'},
+        {key: 'loan_int_rate', question: 'What is the loan interest rate?', type: 'float'},
+        {
+            key: 'loan_percent_income',
+            question: 'What percentage of your income will go to loan payments?',
+            type: 'float'
+        },
         {
             key: 'cb_person_default_on_file',
             question: 'Do you have any defaults on file?',
             options: ['Y', 'N']
         },
-        {key: 'cb_person_cred_hist_length', question: 'How long is your credit history?'},
+        {key: 'cb_person_cred_hist_length', question: 'How long is your credit history?', type: 'number'},
     ];
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -83,25 +87,38 @@ const ChooseAssistant = (props) => {
     };
 
     const handleSendResponse = () => {
-        const key = questions[currentQuestionIndex].key;
-        let response = request;
+        const currentQuestion = questions[currentQuestionIndex];
+        const key = currentQuestion.key;
+        const response = extractResponse(request, currentQuestion.type);
+        console.log(response);
         setPendingResponse(true);
 
-        if (!isNaN(response) && key !== 'loan_int_rate' && key !== 'loan_percent_income') {
-            response = parseInt(response, 10);
-        } else if (!isNaN(response) && (key === 'loan_int_rate' || key === 'loan_percent_income')) {
-            response = parseFloat(response);
-        }
-
         addMessage(response, false, []);
+        setRequest('');
         setTimeout(() => {
             setUserResponses({...userResponses, [key]: response});
-            setRequest('');
             setCurrentQuestionIndex(currentQuestionIndex + 1);
             setPendingResponse(false);
         }, [delay])
     };
 
+    const extractResponse = (input, type) => {
+        if (type === 'number') {
+            const match = input.match(/\d+/);
+            return match ? parseInt(match[0], 10) : null;
+        } else if (type === 'float') {
+            const match = input.match(/\d+(\.\d+)?/);
+            if (match) {
+                let value = parseFloat(match[0]);
+                if (input.includes('%')) {
+                    value = value / 100;
+                }
+                return value;
+            }
+            return null;
+        }
+        return input;
+    };
 
     useEffect(() => {
         if (currentQuestionIndex < questions.length) {
@@ -127,7 +144,7 @@ const ChooseAssistant = (props) => {
                 const userDataBlob = new Blob([JSON.stringify(userResponses)], {type: 'application/json'});
 
                 formData.append("additional_data", additionalDataBlob);
-                formData.append("user_data", userDataBlob)
+                formData.append("user_data", userDataBlob);
 
                 const response = await axios.post('http://localhost:8000/api/conversation/create', formData, {
                     headers: {
