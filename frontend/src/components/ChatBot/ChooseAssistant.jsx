@@ -64,6 +64,7 @@ const ChooseAssistant = (props) => {
     ];
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [currentQuestion, setCurrentQuestion] = useState(null);
 
     const handleResponseOptionClick = (option) => {
         const currentQuestion = questions[currentQuestionIndex];
@@ -79,11 +80,7 @@ const ChooseAssistant = (props) => {
             setUserResponses({...userResponses, [key]: option});
             setCurrentQuestionIndex(currentQuestionIndex + 1);
             setPendingResponse(false);
-        }, [delay])
-    };
-
-    const handleInputChange = (event) => {
-        setRequest(event.target.value);
+        }, [delay]);
     };
 
     const handleSendResponse = () => {
@@ -107,6 +104,11 @@ const ChooseAssistant = (props) => {
         }, [delay]);
     };
 
+
+    const handleInputChange = (event) => {
+        setRequest(event.target.value);
+    };
+
     const extractResponse = (input, type) => {
         if (type === 'number') {
             const match = input.match(/\d+/);
@@ -128,11 +130,15 @@ const ChooseAssistant = (props) => {
     useEffect(() => {
         if (currentQuestionIndex < questions.length) {
             const currentQuestion = questions[currentQuestionIndex];
-            addMessage(currentQuestion.question, true, currentQuestion.options || []);
+            if (!messages.some(message => message.content === currentQuestion.question)) {
+                addMessage(currentQuestion.question, true, currentQuestion.options || []);
+            }
+            setCurrentQuestion(currentQuestion);
         } else {
             handleCreateConversation();
         }
     }, [currentQuestionIndex]);
+
 
     const handleCreateConversation = async () => {
         setPendingResponse(true);
