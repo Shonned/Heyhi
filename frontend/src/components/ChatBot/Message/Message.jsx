@@ -2,7 +2,10 @@ import {useState} from "react";
 import {Message, User, Content, ContentFlex, Options, Option} from "./Message.styles.js";
 
 const getContentClassName = (content) => {
-    return content.length <= 50 ? 'content short-content' : 'content';
+    if (!content) {
+        return 'message-content empty';
+    }
+    return content.length > 50 ? 'message-content long' : 'message-content';
 };
 
 const MessageBot = (props) => {

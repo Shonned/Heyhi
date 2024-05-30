@@ -9,7 +9,7 @@ export const Message = styled.div`
         flex-direction: row-reverse;
         justify-content: flex-start;
 
-        .content {
+        .message-content {
             border-radius: 15px 3px 15px 15px;
         }
 

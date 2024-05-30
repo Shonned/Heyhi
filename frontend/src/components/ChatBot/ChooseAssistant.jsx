@@ -90,8 +90,13 @@ const ChooseAssistant = (props) => {
         const currentQuestion = questions[currentQuestionIndex];
         const key = currentQuestion.key;
         const response = extractResponse(request, currentQuestion.type);
-        console.log(response);
         setPendingResponse(true);
+
+        if (response === null) {
+            addMessage('An error has occurred: Invalid response type.', true, []);
+            setPendingResponse(false);
+            return;
+        }
 
         addMessage(response, false, []);
         setRequest('');
@@ -99,7 +104,7 @@ const ChooseAssistant = (props) => {
             setUserResponses({...userResponses, [key]: response});
             setCurrentQuestionIndex(currentQuestionIndex + 1);
             setPendingResponse(false);
-        }, [delay])
+        }, [delay]);
     };
 
     const extractResponse = (input, type) => {
