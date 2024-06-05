@@ -61,7 +61,7 @@ accepted_query = {
     "cb_person_default_on_file": 0
 }
 
-sample_df = pd.DataFrame([sample_query])[X.columns]
+sample_df = pd.DataFrame([accepted_query])[X.columns]
 prediction = model.predict(sample_df)[0]
 
 if prediction == 0:

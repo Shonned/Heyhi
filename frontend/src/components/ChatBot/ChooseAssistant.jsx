@@ -15,7 +15,7 @@ const ChooseAssistant = (props) => {
     const [pendingResponse, setPendingResponse] = useState(false);
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
-    const delay = 0;
+    const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
     const navigate = useNavigate();
 
     const [messages, setMessages] = useState([
