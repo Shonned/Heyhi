@@ -12,7 +12,6 @@ router = APIRouter()
 class Conversation(BaseModel):
     user_uid: str
     user_data: dict
-    assistant: str
 
 
 @router.get("/conversation/get/{conv_uid}")
@@ -89,7 +88,6 @@ async def create_conversation(
 
     combined_data = {
         "user_uid": additional_dict["user_uid"],
-        "assistant": additional_dict["assistant"],
         "user_data": user_dict
     }
 
@@ -98,7 +96,6 @@ async def create_conversation(
     data = {
         "user_uid": conv.user_uid,
         "user_data": conv.user_data,
-        "assistant": conv.assistant,
         "created_at": datetime.utcnow(),
         "updated_at": datetime.utcnow()
     }

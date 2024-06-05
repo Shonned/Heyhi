@@ -12,7 +12,6 @@ import Input from "@components/Form/Input/Input.jsx";
 import {useNavigate} from "react-router-dom";
 
 const ChooseAssistant = (props) => {
-    const [assistant, setAssistant] = useState(null);
     const [pendingResponse, setPendingResponse] = useState(false);
     const [request, setRequest] = useState('');
     const chatbotContentRef = useRef(null);
@@ -25,11 +24,6 @@ const ChooseAssistant = (props) => {
 
     const [userResponses, setUserResponses] = useState({});
     const questions = [
-        {
-            key: 'select_assistant',
-            question: 'To get started choose a virtual assistant.',
-            options: ['Loan Assistant', 'Health Assistant']
-        },
         {key: 'person_age', question: 'What is your age?', type: 'number'},
         {key: 'person_income', question: 'What is your income?', type: 'number'},
         {
@@ -70,11 +64,6 @@ const ChooseAssistant = (props) => {
         const currentQuestion = questions[currentQuestionIndex];
         const key = currentQuestion.key;
         setPendingResponse(true);
-
-        if (key === 'select_assistant') {
-            setAssistant(option);
-        }
-
         addMessage(option, false, []);
         setTimeout(() => {
             setUserResponses({...userResponses, [key]: option});
@@ -148,7 +137,6 @@ const ChooseAssistant = (props) => {
 
                 const additionalData = {
                     user_uid: props.user.uid,
-                    assistant: assistant
                 };
 
                 const additionalDataBlob = new Blob([JSON.stringify(additionalData)], {type: 'application/json'});
