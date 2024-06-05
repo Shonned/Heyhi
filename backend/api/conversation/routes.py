@@ -1,3 +1,4 @@
+import numpy as np
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from fastapi.responses import JSONResponse
 from datetime import datetime
@@ -12,7 +13,6 @@ router = APIRouter()
 class Conversation(BaseModel):
     user_uid: str
     user_data: dict
-
 
 @router.get("/conversation/get/{conv_uid}")
 async def get_conversation(conv_uid: str):
@@ -52,7 +52,6 @@ async def get_all(user_uid: str):
 
 @router.get("/conversation/get/{conv_uid}/explanation")
 async def get_explanation(conv_uid: str):
-    user_data = {}
     doc_ref = db.collection(u'conversations').document(conv_uid)
     doc = doc_ref.get()
 
@@ -97,16 +96,22 @@ async def create_conversation(
         "user_uid": conv.user_uid,
         "user_data": conv.user_data,
         "created_at": datetime.utcnow(),
-        "updated_at": datetime.utcnow()
+        "updated_at": datetime.utcnow(),
     }
+
     doc_ref_tuple = db.collection(u'conversations').add(data)
     doc_ref = doc_ref_tuple[1]
     doc_id = doc_ref.id
 
     result = predict_loan(conv.user_data)
+
+    accepted = False
     content = "After analysing your information, we regret to inform you that your request has been refused."
     if result == 'Accepted':
+        accepted = True
         content = "After analysing your information, we are pleased to inform you that your request has been accepted."
+
+    db.collection(u'conversations').document(doc_id).update({"accepted": accepted})
 
     response = {
         "content": content,

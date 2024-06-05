@@ -52,7 +52,7 @@ def predict_loan(query_dict):
 
     sample_df = pd.DataFrame([query_dict])[X.columns]
     prediction = model.predict(sample_df)[0]
-    return True if prediction == 1 else False
+    return "Accepted" if prediction == 1 else "Rejected"
 
 
 def explain_rejection(query_dict):
