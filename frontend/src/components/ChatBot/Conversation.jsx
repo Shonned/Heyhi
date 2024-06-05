@@ -10,7 +10,6 @@ import axios from 'axios';
 import {MessageBot, MessageUser} from './Message/Message.jsx';
 import Input from "@components/Form/Input/Input.jsx";
 import {useParams} from "react-router-dom";
-import InputFile from "../Form/Input/InputFile.jsx";
 
 const Conversation = (props) => {
     const {id} = useParams();
@@ -19,7 +18,8 @@ const Conversation = (props) => {
     const [disabled, setDisabled] = useState(true);
     const [pendingResponse, setPendingResponse] = useState(false);
     const [conversation, setConversation] = useState(null);
-
+    const [explanationDisplayed, setExplanationDisplayed] = useState(false);
+    const [explanation, setExplanation] = useState(null);
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
@@ -58,14 +58,40 @@ const Conversation = (props) => {
                 });
             }
         }
+
+        const fetchExplanation = async () => {
+            if (conversation) {
+                if (!conversation.conversation_info.accepted) {
+                    try {
+                        if (id) {
+                            const response = await axios.get(`http://localhost:8000/api/conversation/get/${id}/explanation`);
+                            setExplanation(response.data.explanations);
+                        }
+                    } catch (error) {
+                        console.error('Error fetching data:', error);
+                    }
+                }
+            }
+        }
+
+        fetchExplanation();
+
     }, [conversation, messages]);
 
+    useEffect(() => {
+        if (explanation && Array.isArray(explanation) && !explanationDisplayed) {
+            explanation.forEach(exp => {
+                addMessage(exp, true, []);
+            });
+            setExplanationDisplayed(true);
+        }
+    }, [explanation, explanationDisplayed]);
 
     const sendRequest = async (request) => {
         setRequest('');
         setPendingResponse(true);
-        addMessage(request.name, false, [])
-        console.log(request)
+        addMessage(request.name, false, []);
+        console.log(request);
     };
 
     const handleOptionClick = (option) => {
@@ -93,8 +119,6 @@ const Conversation = (props) => {
     const handleRequest = (e) => {
         setRequest(e.target.value);
     }
-
-    //const lastMessageHasOptions = messages.length > 0 && messages[messages.length - 1].options.length > 0
 
     return (
         <ChatbotContainer className="chatbot">
