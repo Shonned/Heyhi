@@ -157,6 +157,8 @@ const ChooseAssistant = (props) => {
                 formData.append("additional_data", additionalDataBlob);
                 formData.append("user_data", userDataBlob);
 
+                console.log(formData);
+
                 const response = await axios.post('http://localhost:8000/api/conversation/create', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',

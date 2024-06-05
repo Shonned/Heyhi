@@ -4,14 +4,16 @@ from datetime import datetime
 import json
 from pydantic import BaseModel
 from ..database import db
-from ...v2.dice_predict_api import predict_loan
+from ...v2.dice_predict_api import predict_loan, explain_rejection
 
 router = APIRouter()
+
 
 class Conversation(BaseModel):
     user_uid: str
     user_data: dict
     assistant: str
+
 
 @router.get("/conversation/get/{conv_uid}")
 async def get_conversation(conv_uid: str):
@@ -28,6 +30,7 @@ async def get_conversation(conv_uid: str):
         return conversation_with_messages
     else:
         return {"message": "Conversation not found"}
+
 
 @router.get("/conversation/get_all/{user_uid}")
 async def get_all(user_uid: str):
@@ -46,6 +49,23 @@ async def get_all(user_uid: str):
             conversation_with_messages["messages"].append(message.to_dict())
         user_conversations_with_messages.append(conversation_with_messages)
     return user_conversations_with_messages
+
+
+@router.get("/conversation/get/{conv_uid}/explanation")
+async def get_explanation(conv_uid: str):
+    user_data = {}
+    doc_ref = db.collection(u'conversations').document(conv_uid)
+    doc = doc_ref.get()
+
+    if doc.exists:
+        doc_data = doc.to_dict()
+        user_data = doc_data.get("user_data", {})
+        if not doc_data.get("accepted"):
+            return explain_rejection(user_data)
+        return 'Already accepted'
+    else:
+        return {"message": "Conversation not found"}
+
 
 @router.post("/conversation/create")
 async def create_conversation(

@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
@@ -5,6 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from dice_ml import Data, Model
 import dice_ml
 import os
+from backend.v2.explaination import generate_explanations
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.expand_frame_repr', False)
@@ -51,3 +53,30 @@ def predict_loan(query_dict):
     sample_df = pd.DataFrame([query_dict])[X.columns]
     prediction = model.predict(sample_df)[0]
     return "Accepted" if prediction == 1 else "Rejected"
+
+
+def explain_rejection(query_dict):
+    for feature in categorical_features:
+        if feature in query_dict:
+            le = label_encoders.get(feature)
+            query_dict[feature] = le.transform([query_dict[feature]])[0]
+
+    sample_df = pd.DataFrame([query_dict])[X.columns]
+    explanation = exp.generate_counterfactuals(sample_df, total_CFs=5, desired_class="opposite")
+    counterfactuals_df = explanation.cf_examples_list[0].final_cfs_df
+
+    explanations_list = []
+    for _, cf in counterfactuals_df.iterrows():
+        explanations = generate_explanations(sample_df.iloc[0], cf)
+        explanations_list.append(explanations)
+
+    query_dict = {k: (
+        int(v) if isinstance(v, (np.integer, np.int64)) else float(v) if isinstance(v, (np.float64, np.float32)) else v)
+        for k, v in query_dict.items()}
+    counterfactuals_list = counterfactuals_df.applymap(
+        lambda x: int(x) if isinstance(x, (np.integer, np.int64)) else float(x) if isinstance(x, (
+            np.float64, np.float32)) else x).to_dict(orient="records")
+
+    return {
+        "explanations": explanations_list
+    }
