@@ -4,16 +4,14 @@ from datetime import datetime
 import json
 from pydantic import BaseModel
 from ..database import db
-from ...ai.scripts.predict import predict_new_loan, model, label_encoders, columns
+from ...v2.dice_predict_api import predict_loan
 
 router = APIRouter()
-
 
 class Conversation(BaseModel):
     user_uid: str
     user_data: dict
     assistant: str
-
 
 @router.get("/conversation/get/{conv_uid}")
 async def get_conversation(conv_uid: str):
@@ -30,7 +28,6 @@ async def get_conversation(conv_uid: str):
         return conversation_with_messages
     else:
         return {"message": "Conversation not found"}
-
 
 @router.get("/conversation/get_all/{user_uid}")
 async def get_all(user_uid: str):
@@ -49,7 +46,6 @@ async def get_all(user_uid: str):
             conversation_with_messages["messages"].append(message.to_dict())
         user_conversations_with_messages.append(conversation_with_messages)
     return user_conversations_with_messages
-
 
 @router.post("/conversation/create")
 async def create_conversation(
@@ -90,10 +86,9 @@ async def create_conversation(
     doc_ref = doc_ref_tuple[1]
     doc_id = doc_ref.id
 
-    prediction = predict_new_loan(conv.user_data, model, label_encoders, columns)
-
+    result = predict_loan(conv.user_data)
     content = "After analysing your information, we regret to inform you that your request has been refused."
-    if prediction == 'Accepted':
+    if result == 'Accepted':
         content = "After analysing your information, we are pleased to inform you that your request has been accepted."
 
     response = {
