@@ -6,7 +6,7 @@ from dice_ml import Data, Model
 import dice_ml
 
 # Import the explanation functions
-from explaination import generate_explanations
+from explanations import generate_explanations
 
 # Adjust display settings
 pd.set_option('display.max_columns', None)

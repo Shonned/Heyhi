@@ -4,7 +4,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 from dice_ml import Data, Model
 import dice_ml
-from explaination import generate_explanations
+from explanations import generate_explanations
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.expand_frame_repr', False)
