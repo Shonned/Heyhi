@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from dice_ml import Data, Model
 import dice_ml
 import os
-from backend.v2.explaination import generate_explanations
+from backend.v2.explaination import generate_counterfactual_explanations, format_explanations
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.expand_frame_repr', False)
@@ -67,16 +67,12 @@ def explain_rejection(query_dict):
 
     explanations_list = []
     for _, cf in counterfactuals_df.iterrows():
-        explanations = generate_explanations(sample_df.iloc[0], cf)
+        explanations = generate_counterfactual_explanations(sample_df.iloc[0], cf)
         explanations_list.append(explanations)
 
-    query_dict = {k: (
-        int(v) if isinstance(v, (np.integer, np.int64)) else float(v) if isinstance(v, (np.float64, np.float32)) else v)
-        for k, v in query_dict.items()}
-    counterfactuals_list = counterfactuals_df.applymap(
-        lambda x: int(x) if isinstance(x, (np.integer, np.int64)) else float(x) if isinstance(x, (
-            np.float64, np.float32)) else x).to_dict(orient="records")
+    credit_prefix = "In order to improve your credit score, you need to consider the following changes"
+    formatted_explanations = format_explanations(explanations_list, credit_prefix)
 
     return {
-        "explanations": explanations_list
+        "explanations": formatted_explanations
     }

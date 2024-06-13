@@ -1,7 +1,10 @@
-import random
 import pandas as pd
+import numpy as np
+import ast
+import random
 
-feature_classes = {
+# Define the feature actionability taxonomy
+feature_classes_credit = {
     "person_age": "NSI",
     "person_income": "DM",
     "person_home_ownership": "IM",
@@ -14,113 +17,97 @@ feature_classes = {
     "cb_person_cred_hist_length": "IM"
 }
 
+# Define templates for each feature actionability class
 templates = {
-    "DM": [
-        "{ACTION} {FEATURE} from {QUERY_VALUE} value to {CF_VALUE}",
-        "{ACTION} {FEATURE} to {CF_VALUE}"
-    ],
-    "IM": [
-        "{VERB} {OBJECT} to {ACTION} {FEATURE} from {QUERY_VALUE} to {CF_VALUE}",
-        "{VERB} {OBJECT} to {ACTION} {FEATURE} to {CF_VALUE}"
-    ],
-    "NSI": [
-        "Having a value of {CF_VALUE} for {FEATURE} would provide a {COMPARATIVE} chance of {DESIRED_OUTCOME} compared to a value of {QUERY_VALUE}"
-    ],
-    "SI": [
-        "{POSSESSIVE} {FEATURE} has contributed to {OUTCOME}"
-    ],
+    "DM": "{ACTION} your {FEATURE} from {QUERY_VALUE} to {CF_VALUE} is suggested.",
+    "IM": "Take steps to {ACTION} your {FEATURE} from {QUERY_VALUE} to {CF_VALUE} as an important step.",
+    "NSI": "While your {FEATURE} at {QUERY_VALUE} is a given, note that a {FEATURE} of {CF_VALUE} is typically seen with desired outcomes.",
+    "SI": "Your {FEATURE}, at {QUERY_VALUE}, is an unchangeable factor. Still, it’s important to understand how a {FEATURE} of {CF_VALUE} relates to the outcome."
 }
 
+# Causal relationships dictionary
+causal_relationships_credit = {
+    "person_income": ["loan_int_rate"],
+    "person_home_ownership": ["loan_percent_income"],
+    "loan_history": ["loan_intent"],
+    "person_emp_length": ["loan_intent"],
+    "loan_amount": ["loan_percent_income"],
+    "credit_history_length": []
+}
+# Dictionary for mapping feature code names to human-friendly names
+feature_name_mapping = {
+    "person_emp_length": "Employment Length (years)",
+    "person_age": "Age",
+    "cb_person_cred_hist_length": "Credit History Length (years)",
+    "loan_amnt": "Loan Amount",
+    "loan_percent_income": "Loan as Percentage of Income",
+    "person_home_ownership": "Home Ownership Status",
+    "person_income": "Income",
+    "loan_intent": "Loan Intent",
+    "loan_grade": "Loan Grade",
+    "loan_int_rate": "Loan Interest Rate"
+}
 
-def determine_action_word(query_value, cf_value):
-    is_categorical = isinstance(query_value, str)
+feature_changes_order = ['person_home_ownership', 'person_age', 'loan_amnt', 'loan_int_rate', 'person_emp_length',
+                         'loan_grade', 'cb_person_cred_hist_length', 'loan_percent_income', 'person_income']
 
-    if is_categorical:
-        return random.choice(["change", "modify"])
-    else:
-        if cf_value > query_value:
-            return random.choice(["increase", "raise"])
-        else:
-            return random.choice(["decrease", "reduce"])
-
-
-def generate_counterfactual_explanation(feature, query_value, cf_value, actionability_class):
-    template = random.choice(templates[actionability_class])
-    action_word = determine_action_word(query_value, cf_value)
-
-    placeholders = {
-        "{VERB}": ["Take", "Initiate", "Undertake", "Pursue", "Negotiate"],
-        "{OBJECT}": ["steps", "measures", "actions"],
-        "{ACTION}": [action_word],
-        "{COMPARATIVE}": ["increase", "higher", "better"],
-        "{DESIRED_OUTCOME}": ["accepted", "pass"],
-        "{OUTCOME}": ["heart disease"],
-        "{POSSESSIVE}": ["Your"],
-        "{FEATURE}": [feature],
-        "{QUERY_VALUE}": [query_value],
-        "{CF_VALUE}": [cf_value],
-    }
-
-    for placeholder, values in placeholders.items():
-        template = template.replace(placeholder, str(random.choice(values)))
-
-    return template
-
-
-def generate_explanation(feature, query_value, cf_value, actionability_class, causality_dict, changed_features):
-    is_categorical = isinstance(query_value, str)
-    explanation = generate_counterfactual_explanation(feature, query_value, cf_value, actionability_class)
-
-    # Check for parent features that influence the current feature
-    parent_features = [parent for parent, children in causality_dict.items() if feature in children]
-
-    # Filter out parent features that are already changed or are immutable
-    parent_features = [parent for parent in parent_features if
-                       parent not in changed_features and feature_classes[parent] not in ["non_sensitive_immutable",
-                                                                                          "sensitive_immutable"]]
-
-    if parent_features:
-        parent_str = ', '.join(parent_features[:-1]) + ' and ' + parent_features[-1] if len(parent_features) > 1 else \
-        parent_features[0]
-        explanation += f". Please note that this change is influenced by your {parent_str} levels."
-
-    return explanation
+# Function to determine the action based on value changes
+def determine_action(query_value, cf_value, class_):
+    cat_changes = ["change", "modify", "adjust"]
+    increase = ["increase", "raise", "elevate"]
+    decrease = ["decrease", "lower", "reduce"]
+    # Numeric feature and value changes
+    if isinstance(query_value, (int, float)) and isinstance(cf_value, (int, float)):
+        if query_value < cf_value:
+            return random.choice(increase)
+        elif query_value > cf_value:
+            return random.choice(decrease)
+    # Categorical feature or no change in numeric value
+    return random.choice(cat_changes)
 
 
-def generate_explanations(query, counterfactual, user_actionability_classes=None):
+# Modified function to generate counterfactual explanations without repeating children
+def generate_counterfactual_explanations(query, counterfactual):
     explanations = []
-    additional_info = []
-    changed_features = set()
-
-    if user_actionability_classes is None:
-        user_actionability_classes = {}
-
-    mutable_count = 0
-
-    for feature in query.keys():
-        query_value = query[feature]
-        cf_value = counterfactual[feature]
-
-        # Skip if the feature value has not changed
-        if query_value == cf_value:
-            continue
-
-        actionability_class = feature_classes.get(feature, "NSI")
-        changed_features.add(feature)  # Keep track of changed features
-
-        explanation = generate_explanation(feature, query_value, cf_value, actionability_class, {}, changed_features)
-        if actionability_class in ["DM", "IM"]:
-            mutable_count += 1
-            explanations.append(f"{mutable_count}. {explanation}")
+    mentioned_features = set()  # Track mentioned features to avoid repetition
+    for feature in feature_changes_order:
+        if feature in query and feature in counterfactual:
+            # Check if the feature or its value has changed
+            value_changed = query[feature] != counterfactual[feature]
+            if value_changed or feature in causal_relationships_credit:
+                mentioned_features.add(feature)  # Mark feature as mentioned
+                class_ = feature_classes_credit.get(feature, "")
+                action = determine_action(query[feature], counterfactual[feature], class_)
+                human_friendly_feature_name = feature_name_mapping.get(feature, feature.replace('_', ' '))
+                template = templates.get(class_, "")
+                if value_changed:
+                    # Generate explanation for features that have changed
+                    explanation = template.format(
+                        ACTION=action,
+                        FEATURE=human_friendly_feature_name,
+                        QUERY_VALUE=query[feature],
+                        CF_VALUE=counterfactual[feature]
+                    )
+                    explanations.append(explanation)
+                # Handle causal relationships
+                if feature in causal_relationships_credit:
+                    for child in causal_relationships_credit[feature]:
+                        if child not in mentioned_features:  # Check if child feature hasn't been mentioned before
+                            child_class = feature_classes_credit.get(child, "")
+                            child_action = determine_action(query.get(child, None), counterfactual.get(child, None),
+                                                            child_class)
+                            child_explanation = f"Additionally, {human_friendly_feature_name} influences {feature_name_mapping.get(child, child.replace('_', ' '))}, which may {child_action}."
+                            explanations.append(child_explanation)
+                            mentioned_features.add(child)  # Mark child as mentioned
         else:
-            additional_info.append(explanation)
+            explanations.append(f"The feature '{feature}' is not present in the provided data.")
+    return explanations
 
-    if mutable_count > 0:
-        result = f"You need to change {mutable_count} features:\n" + "\n".join(explanations)
-    else:
-        result = "No feature changes are necessary."
 
-    if additional_info:
-        result += "\n\nAdditional information:\n" + "\n".join(additional_info)
+# # Assume the necessary variables (query, counterfactual, feature_changes_order, etc.) are defined elsewhere
+# explanations_list = generate_counterfactual_explanations(q, c, order, feature_classes_credit, templates, causal_relationships_credit, feature_name_mapping)
 
-    return result
+# Function to format explanations into a single string
+def format_explanations(explanations, prefix):
+    flattened_explanations = [item for sublist in explanations for item in sublist]
+    return f"{prefix}:\n\n" + "\n".join(flattened_explanations)
