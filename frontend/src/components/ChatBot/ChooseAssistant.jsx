@@ -134,7 +134,6 @@ const ChooseAssistant = (props) => {
         setTimeout(async () => {
             try {
                 const formData = new FormData();
-
                 const additionalData = {
                     user_uid: props.user.uid,
                 };
@@ -144,8 +143,6 @@ const ChooseAssistant = (props) => {
 
                 formData.append("additional_data", additionalDataBlob);
                 formData.append("user_data", userDataBlob);
-
-                console.log(formData);
 
                 const response = await axios.post('http://localhost:8000/api/conversation/create', formData, {
                     headers: {

@@ -54,7 +54,11 @@ const Conversation = (props) => {
 
             if (messages.length === 0) {
                 formattedMessages.forEach(message => {
-                    addMessage(message.content, message.isBot, message.options);
+                    if(!conversation.conversation_info.accepted) {
+                        addMessage(message.content, message.isBot, ['Get solutions']);
+                    } else {
+                        addMessage(message.content, message.isBot, []);
+                    }
                 });
             }
         }
@@ -64,7 +68,8 @@ const Conversation = (props) => {
                 if (!conversation.conversation_info.accepted) {
                     try {
                         if (id) {
-                            const response = await axios.get(`http://localhost:8000/api/conversation/get/${id}/explanation`);
+                            const response = await axios.get(
+                                `http://localhost:8000/api/conversation/get/${id}/explanation`);
                             setExplanation(response.data.explanations);
                         }
                     } catch (error) {
@@ -78,20 +83,14 @@ const Conversation = (props) => {
 
     }, [conversation, messages]);
 
-    useEffect(() => {
-        if (explanation && Array.isArray(explanation) && !explanationDisplayed) {
-            explanation.forEach(exp => {
-                addMessage(exp, true, []);
-            });
-            setExplanationDisplayed(true);
-        }
-    }, [explanation, explanationDisplayed]);
-
     const sendRequest = async (request) => {
         setRequest('');
         setPendingResponse(true);
-        addMessage(request.name, false, []);
-        console.log(request);
+        if (explanation && Array.isArray(explanation)) {
+            explanation.forEach(exp => {
+                addMessage(exp, true, []);
+            });
+        }
     };
 
     const handleOptionClick = (option) => {
