@@ -7,7 +7,7 @@ from dice_ml import Data, Model
 import dice_ml
 import os
 from backend.v2.explanations import generate_counterfactual_explanations, format_explanations
-from backend.v2.openai.chatgpt_improve import improve_message
+from backend.v2.openai.chatgpt_improve import improve_message, improve_explanations
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.expand_frame_repr', False)
@@ -75,5 +75,5 @@ def explain_rejection(query_dict):
     formatted_explanations = format_explanations(explanations_list, credit_prefix)
 
     return {
-        "explanations": improve_message(formatted_explanations)
+        "explanations": improve_explanations(formatted_explanations)
     }

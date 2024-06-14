@@ -64,15 +64,6 @@ const History = (props) => {
                 <HistoryHeader>
                     <h2 className="title">History</h2>
                 </HistoryHeader>
-                {loading && (
-                    <l-ring
-                        size="23"
-                        stroke="3"
-                        bg-opacity="0"
-                        speed="2"
-                        color="white"
-                    ></l-ring>
-                )}
                 {!loading && history && (
                     <HistoryMessages>
                         {history.map((conversation, index) => (

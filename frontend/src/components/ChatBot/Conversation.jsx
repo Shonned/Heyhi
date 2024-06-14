@@ -62,7 +62,9 @@ const Conversation = (props) => {
                 });
             }
         }
+    }, [conversation, messages]);
 
+    useEffect(() => {
         const fetchExplanation = async () => {
             if (conversation) {
                 if (!conversation.conversation_info.accepted) {
@@ -71,24 +73,25 @@ const Conversation = (props) => {
                             const response = await axios.get(
                                 `http://localhost:8000/api/conversation/get/${id}/explanation`);
                             setExplanation(response.data.explanations);
+                            setExplanationDisplayed(true);
                         }
                     } catch (error) {
                         console.error('Error fetching data:', error);
                     }
                 }
             }
-        }
+        };
 
         fetchExplanation();
-
-    }, [conversation, messages]);
+    }, [conversation, messages, explanationDisplayed]);
 
     const sendRequest = async (request) => {
         setRequest('');
         setPendingResponse(true);
         if (explanation) {
-           addMessage(explanation, true, []);
+            addMessage(explanation, true, []);
         }
+        setPendingResponse(false);
     };
 
     const handleOptionClick = (option) => {
@@ -121,12 +124,21 @@ const Conversation = (props) => {
         <ChatbotContainer className="chatbot">
             <ChatbotContent className="chatbot-content" ref={chatbotContentRef}>
                 <ChatbotMessages className="chatbot-messages">
-                    {messages && messages.map((message, index) =>
+                    {!explanation && (
+                        <l-ring
+                            size="23"
+                            stroke="3"
+                            bg-opacity="0"
+                            speed="2"
+                            color="white"
+                        ></l-ring>
+                    )}
+                    {messages && explanation && messages.map((message, index) =>
                         message.isBot ? (
-                            <MessageBot
-                                key={index}
-                                content={message.content}
-                                options={message.options}
+                        <MessageBot
+                        key={index}
+                    content={message.content}
+                    options={message.options}
                                 onOptionClick={handleOptionClick}
                             />
                         ) : (
