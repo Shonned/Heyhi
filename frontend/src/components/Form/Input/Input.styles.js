@@ -11,7 +11,7 @@ export const InputLabel = styled.label`
     left: 17px;
     width: 75%;
     background: var(--background-color);
-    color: var(--light-grey-color);
+    color: var(--dark-grey-color);
     font-size: 13px;
     font-weight: 500;
     transition: all .3s;
@@ -36,8 +36,8 @@ export const TextInput = styled.input`
     font-size: 15px;
     border-radius: 25px;
     background: var(--background-color);
-    color: var(--white);
-    border: 2px solid var(--grey-color);
+    color: var(--dark-grey-color);
+    border: 2px solid var(--light-grey-color);
     cursor: pointer;
 
     &:focus {

@@ -130,7 +130,7 @@ const Conversation = (props) => {
                             stroke="3"
                             bg-opacity="0"
                             speed="2"
-                            color="white"
+                            color="#585858"
                         ></l-ring>
                     )}
                     {messages && explanation && messages.map((message, index) =>

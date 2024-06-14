@@ -26,7 +26,7 @@ export const StyledSidebarLogo = styled.div`
     width: 50px;
     height: 50px;
     margin: auto auto 10px;
-    background-image: url("https://i.ibb.co/N2rPbj7/heyhi-form.png");
+    background-image: url("https://i.ibb.co/NZpkYZ7/heyhi-form-black.png");
     background-size: cover;
     background-position: center center;
 
@@ -73,15 +73,10 @@ export const StyledSidebarItem = styled.li`
     
     svg {
         font-size: 25px;
-        color: var(--light-grey-color);
+        color: var(--dark-grey-color);
         transition: all .3s;
     }
-
-    &.active svg,
-    &:hover svg {
-        color: var(--white);
-    }
-
+    
     &.sidebar-user {
         position: absolute;
         bottom: 15px;

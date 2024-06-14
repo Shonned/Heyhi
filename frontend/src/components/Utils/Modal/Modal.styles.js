@@ -19,7 +19,7 @@ export const ModalContainer = styled.div`
     position: relative;
     width: 450px;
     height: 550px;
-    color: var(--white);
+    color: var(--dark-grey-color);
     background: var(--background-color);
     border: 1px solid rgba(255, 255, 255, .125);
     border-radius: 15px;
@@ -59,7 +59,8 @@ export const ModalClose = styled.div`
     display: flex;
     margin-left: auto;
     padding: 7px;
-    background: var(--grey-color);
+    background: var(--dark-grey-color);
+    color: white;
     border-radius: 50%;
     transition: all .3s;
     cursor: pointer;
@@ -75,7 +76,7 @@ export const ModalClose = styled.div`
 
 export const ModalAuthSwitch = styled.p`
     padding-top: 5px;
-    color: var(--white);
+    color: var(--light-grey-color);
     font-size: .9rem;
     font-weight: 500;
 

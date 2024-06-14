@@ -32,6 +32,7 @@ export const ExternAuthServiceBtn = styled(Button)`
     &.google {
         margin-bottom: 10px;
         background: white !important;
-        color: var(--background-color);
+        border: 1px solid var(--light-grey-color);
+        color: var(--dark-grey-color);
     }
 `;

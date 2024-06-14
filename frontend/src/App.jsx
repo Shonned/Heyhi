@@ -71,7 +71,7 @@ function App() {
                 {modals.register &&
                     <Modal modalId="register" onOpenModal={handleOpenModal} onClose={handleCloseModal}/>}
                 {modals.settings && <Modal modalId="settings" onClose={handleCloseModal}/>}
-                <ToastContainer theme="dark"/>
+                <ToastContainer theme="white"/>
             </div>
         </Router>
     );

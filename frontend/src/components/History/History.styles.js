@@ -46,7 +46,7 @@ export const HistoryMessage = styled.div`
     flex-direction: column;
     padding: 10px 15px;
     border-radius: 10px;
-    color: var(--light-grey-color);
+    color: var(--dark-grey-color);
     font-size: 15px;
     transition: all .3s;
     animation-duration: .6s;

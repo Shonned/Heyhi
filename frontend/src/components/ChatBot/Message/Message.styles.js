@@ -27,7 +27,7 @@ export const User = styled.div`
   min-width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--light-grey-color);
+  background: var(--dark-grey-color);
   border: 1px solid var(--grey-color);
   color: var(--background-color);
   font-size: 20px;
@@ -38,7 +38,7 @@ export const Content = styled.div`
   max-width: 300px;
   padding: 8px 15px;
   font-size: 15px;
-  color: var(--white);
+  color: var(--dark-grey-color);
   background: var(--background-color);
   border: 1px solid var(--grey-color);
   border-radius: 3px 15px 15px 15px;
@@ -66,7 +66,7 @@ export const Option = styled.div`
   max-width: 300px;
   padding: 8px 15px;
   font-size: 15px;
-  color: var(--white);
+  color: var(--dark-grey-color);
   background: var(--background-color);
   border: 1px solid var(--grey-color);
   border-radius: 25px;
@@ -74,6 +74,7 @@ export const Option = styled.div`
 
   &.selected {
     background: var(--primary-color);
+    color: var(--grey-color);
   }
 
   &:first-child {

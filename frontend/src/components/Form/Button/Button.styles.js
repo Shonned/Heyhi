@@ -32,7 +32,7 @@ export const StyledButton = styled.button`
         }
 
         &.icon_only {
-            background: white;
+            background: var(--primary-color);
             color: var(--background-color);
             min-width: 34px;
             height: 34px;
