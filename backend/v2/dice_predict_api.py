@@ -62,7 +62,7 @@ def explain_rejection(query_dict):
             query_dict[feature] = le.transform([query_dict[feature]])[0]
 
     sample_df = pd.DataFrame([query_dict])[X.columns]
-    explanation = exp.generate_counterfactuals(sample_df, total_CFs=5, desired_class="opposite")
+    explanation = exp.generate_counterfactuals(sample_df, total_CFs=1, desired_class="opposite")
     counterfactuals_df = explanation.cf_examples_list[0].final_cfs_df
 
     explanations_list = []

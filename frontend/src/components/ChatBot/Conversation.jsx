@@ -86,10 +86,8 @@ const Conversation = (props) => {
     const sendRequest = async (request) => {
         setRequest('');
         setPendingResponse(true);
-        if (explanation && Array.isArray(explanation)) {
-            explanation.forEach(exp => {
-                addMessage(exp, true, []);
-            });
+        if (explanation) {
+           addMessage(explanation, true, []);
         }
     };
 
