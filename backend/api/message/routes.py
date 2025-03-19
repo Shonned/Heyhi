@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
 from datetime import datetime
-from ..database import db
+from backend.api.database import db
 from backend.api.message.generate_message import random_message
 
 router = APIRouter()

@@ -1,3 +1,4 @@
 env/
-heyhi-ai-firebase-adminsdk-eztb2-eae73c83e4.json
+heyhi-ai-firebase-adminsdk-*.json
 v2/openai/config.py
+.venv

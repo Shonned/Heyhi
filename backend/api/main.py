@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .conversation.routes import router as conversation_router
-from .user.routes import router as users_router
-from .message.routes import router as message_router
+
+from backend.api.conversation.routes import router as conversation_router
+from backend.api.user.routes import router as users_router
+from backend.api.message.routes import router as message_router
 
 app = FastAPI()
 

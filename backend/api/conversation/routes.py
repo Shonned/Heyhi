@@ -4,9 +4,10 @@ from fastapi.responses import JSONResponse
 from datetime import datetime
 import json
 from pydantic import BaseModel
-from ..database import db
-from ...v2.dice_predict_api import predict_loan, explain_rejection
-from ...v2.openai.chatgpt_improve import improve_message
+
+from backend.api.database import db
+from backend.v2.dice_predict_api import explain_rejection
+from backend.v2.openai.chatgpt_improve import improve_message
 
 router = APIRouter()
 
